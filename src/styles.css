@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: rgb(70, 70, 70);
+}
+
+div.main {
+  padding: 20px;
+  width: 500px;
+  height: 500px;
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  background: #101010;
+  border-radius: 20px;
+  box-shadow: 18px 18px 50px -5px #000;
+  z-index: 6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+label,
+tbody tr th,
+tbody tr td,
+li {
+  color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+form {
+  overflow-y: scroll;
+}

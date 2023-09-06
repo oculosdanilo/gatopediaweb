@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fluttergatopedia": {
+      "hosting": {
+        "gatopediaweb": [
+          "gatopedia"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fluttergatopedia"
+  }
+}

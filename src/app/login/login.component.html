@@ -1,0 +1,36 @@
+<div class="main">
+  <h1 class="w-100 text-center mt-3">Login</h1>
+  <form id="auaumiau" action="home.php" method="post" class="needs-validation mt-3" novalidate>
+    <div class="mb-3" id="warning" style="transition: transform 1s; transform: scaleY(0)">
+      <div class="alert alert-success" role="alert">
+        Para entrar, digite novamente as credenciais.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="username" class="form-label">Nome de usuário:</label>
+      <div class="input-group">
+        <span class="input-group-text">@</span>
+        <input name="username" type="text" class="form-control" id="username" required />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha:</label>
+      <div class="input-group">
+        <input name="senha" type="password" class="form-control" id="senha" required />
+        <a class="ignoreHref" style="text-decoration: none; cursor: pointer">
+          <span class="input-group-text">
+            <span class="material-icons" id="verSenha">visibility_off</span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="mb-3">
+      <input name="lembrar" type="checkbox" id="lembrar" value="true" />
+      <label for="lembrar">Lembre-se de mim!</label>
+    </div>
+    <div class="d-flex w-100 justify-content-end">
+      <a href="registrar.html" class="btn btn-outline-light me-2">Registrar</a>
+      <button type="submit" class="btn btn-light">Entrar</button>
+    </div>
+  </form>
+</div>
