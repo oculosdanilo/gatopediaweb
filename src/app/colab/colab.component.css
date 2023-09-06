@@ -1,0 +1,17 @@
+.colab {
+  position: absolute;
+  bottom: 0;
+  right: 1em;
+  color: white;
+  background-color: black;
+  padding: 0.5em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  z-index: 7;
+}
+
+.pp-background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}

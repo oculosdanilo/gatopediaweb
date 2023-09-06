@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class CookiesService {
+class CookiesService {
   constructor() { }
 
   set(cname: string, cvalue: string, exdays: number): void {
@@ -28,6 +28,6 @@ export class CookiesService {
     }
     return null;
   }
-
-
 }
+
+export { CookiesService as cookies };

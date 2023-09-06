@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -7,13 +9,12 @@ body {
 }
 
 div.main {
-  padding: 20px;
-  width: 500px;
-  height: 500px;
-  position: fixed; /* or absolute */
+  padding: 20px 0;
+  display: flex;
+  height: 50%;
+  position: fixed;
   top: 50%;
   left: 50%;
-  /* bring your own prefixes */
   transform: translate(-50%, -50%);
   background: #101010;
   border-radius: 20px;
@@ -21,25 +22,17 @@ div.main {
   z-index: 6;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-p,
-label,
-tbody tr th,
-tbody tr td,
-li {
+* {
   color: white;
+  font-family: "Jost", sans-serif;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-form {
-  overflow-y: scroll;
 }

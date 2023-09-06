@@ -1,0 +1,27 @@
+.divider {
+  height: 80%;
+  align-self: center;
+  width: 1px;
+  background-color: white;
+}
+
+.pt1 {
+  margin-top: 1rem;
+  padding: 0 3rem 0 3rem;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pt1 img {
+  width: 100%;
+}
+
+.pt2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25rem;
+}

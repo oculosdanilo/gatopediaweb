@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'gatoroot',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
-    console.log(this.router.config);
-    this.router.navigate([{ outlets: { root: ["login"] } }], { skipLocationChange: true })
+    if (window.matchMedia('(max-width: 500px)').matches)
+      window.alert(
+        'Oops! Aparentemente você está usando um celular para acessar o site, que não tem otimização para telas menores. Para telefones Android, instale o app pelo Github.\nPor motivos técnicos, não é possível utilizar o aplicativo em celulares com iOS.'
+      );
   }
 }

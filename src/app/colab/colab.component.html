@@ -1,0 +1,9 @@
+<div class="colab">
+  <a routerLink="/colab" class="btn btn-link" (click)="aparecer()">
+    <h5>Colaboradores</h5>
+  </a>
+</div>
+
+<div @aparecer *ngIf="popup === true" class="pp-background">
+  <a routerLink="/" (click)="sair()">exatamente</a>
+</div>
