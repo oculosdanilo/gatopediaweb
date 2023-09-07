@@ -1,20 +1,28 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  group,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component } from '@angular/core';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
     style({ opacity: 0, scale: 1.1 }),
-    animate(
-      '500ms',
-      style({
-        opacity: 1,
-        scale: 1,
-      })
-    ),
+    group([
+      animate(
+        '400ms ease',
+        style({
+          opacity: 1,
+        })
+      ),
+      animate('200ms ease', style({ scale: 1 })),
+    ]),
   ]),
   transition(':leave', [
     animate(
-      '500ms',
+      '300ms ease',
       style({
         opacity: 0,
       })
@@ -23,7 +31,7 @@ const popupAnimation = trigger('aparecer', [
 ]);
 
 @Component({
-  selector: 'app-colab',
+  selector: 'popup-colab',
   templateUrl: './colab.component.html',
   styleUrls: ['./colab.component.css'],
   animations: [popupAnimation],

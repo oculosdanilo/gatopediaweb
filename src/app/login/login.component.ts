@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
 import 'jquery-validation';
+import { ColabComponent } from '../colab/colab.component';
 
 @Component({
   selector: 'app-login',

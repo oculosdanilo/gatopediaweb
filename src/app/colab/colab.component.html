@@ -1,9 +1,48 @@
 <div class="colab">
-  <a routerLink="/colab" class="btn btn-link" (click)="aparecer()">
+  <a routerLink="/colab" (click)="aparecer()">
     <h5>Colaboradores</h5>
   </a>
 </div>
 
 <div @aparecer *ngIf="popup === true" class="pp-background">
-  <a routerLink="/" (click)="sair()">exatamente</a>
+  <div class="pp-body">
+    <a class="pp-close" routerLink="/" (click)="sair()">
+      <span class="material-icons">close</span>
+    </a>
+    <h1 class="w-100 text-center mb-3">Colaboradores</h1>
+    <div class="pp-cards">
+      <div class="pp-card">
+        <img src="assets/danilo.jpg" alt="Imagem representativa de Danilo" />
+        <h2>Danilo Lima</h2>
+        <ul>
+          <li>Programação</li>
+          <li>Design</li>
+        </ul>
+        <a
+          mat-flat-button
+          color="primary"
+          href="mailto:danilo.lima124@etec.sp.gov.br"
+          target="_blank"
+        >
+          EMAIL
+        </a>
+      </div>
+      <div class="pp-card">
+        <img src="assets/lucca.png" alt="Imagem representativa de Lucca" />
+        <h2>Lucca Leal</h2>
+        <ul>
+          <li>Idealização</li>
+          <li>Pesquisas</li>
+        </ul>
+        <a
+          mat-flat-button
+          color="primary"
+          href="https://www.google.com/"
+          target="_blank"
+        >
+          EMAIL
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
