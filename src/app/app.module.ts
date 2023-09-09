@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { ColabComponent } from './colab/colab.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { NgOptimizedImage } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent, ColabComponent],
@@ -19,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,
+    NgOptimizedImage,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
     provideStorage(() => getStorage()),

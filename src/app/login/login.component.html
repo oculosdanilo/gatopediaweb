@@ -1,6 +1,13 @@
 <div class="main">
   <div class="pt1">
-    <img class="mb-4" src="assets/icon.webp" alt="Logo do Gatopédia" />
+    <img
+      class="mb-4"
+      ngSrc="assets/icon.webp"
+      alt="Logo do Gatopédia"
+      width="304"
+      height="304"
+      priority
+    />
     <h1>Gatopédia!</h1>
   </div>
   <div class="divider"></div>
@@ -13,7 +20,7 @@
       ></div>
       <div class="mb-3">
         <label for="username" class="form-label">Nome de usuário:</label>
-        <div class="input-group">
+        <div class="input-group" id="usernameVal">
           <span class="input-group-text" style="border-radius: 50px 0 0 50px">
             @
           </span>
@@ -25,9 +32,16 @@
             id="username"
             required
             maxlength="25"
+            minlength="4"
+            autocomplete="username"
+            pattern="^[^0-9]+$ | [a-zA-Z0-9]+"
           />
           <div id="vazio" class="invalid-feedback">*Obrigatório</div>
-          <div id="vazio" class="invalid-feedback">*Obrigatório</div>
+          <div id="invalido" class="invalid-feedback">
+            Caractere(s) inválido(s)!
+          </div>
+          <div id="pequeno" class="invalid-feedback">Nome muito pequeno!</div>
+          <div id="numerozes" class="invalid-feedback">só números? sério?</div>
         </div>
       </div>
       <div class="mb-3">
@@ -39,6 +53,7 @@
             type="password"
             class="form-control"
             id="senha"
+            autocomplete="current-password"
           />
           <a style="text-decoration: none; cursor: pointer">
             <span class="input-group-text" style="border-radius: 0 50px 50px 0">
@@ -54,7 +69,7 @@
             name="lembrar"
             type="checkbox"
             id="lembrar"
-            value="true"
+            [value]="true"
           />
           <label class="form-check-label" for="lembrar">
             Lembre-se de mim!

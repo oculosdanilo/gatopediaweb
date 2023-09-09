@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
 import 'jquery-validation';
-import { ColabComponent } from '../colab/colab.component';
+import { FirebaseServiceDatabase } from '../firebasedb.service';
+
+type Input = {
+  user: string;
+  senha: string;
+};
 
 @Component({
   selector: 'app-login',
@@ -9,6 +14,8 @@ import { ColabComponent } from '../colab/colab.component';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  constructor(private database: FirebaseServiceDatabase) {}
+
   ngOnInit() {
     $('.input-group a').on('mouseout', function (event) {
       event.preventDefault();
@@ -21,35 +28,60 @@ export class LoginComponent {
       $('#verSenha').html('visibility');
     });
 
-    $('form').on('submit', (event) => {
-      event.preventDefault();
-      const username = document.querySelector<HTMLInputElement>('#username')!;
-
-      if (username.value == '') {
-      }
+    $('#username').on('input', (event) => {
+      this.validate();
     });
 
-    /* (() => {
-      "use strict";
+    $('form').on('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const valores: any[] = [...formData.values()];
+      const inputData: Input = { user: valores[0], senha: valores[1] };
 
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll(".needs-validation");
+      if (this.validate()) {
+        console.log(inputData);
+      }
+    });
+  }
 
-      // Loop over them and prevent submission
-      Array.from(forms).forEach((form) => {
-        form.addEventListener(
-          "submit",
-          (event) => {
-            if (!(form as HTMLInputElement).checkValidity()) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
+  validate(): boolean {
+    const usernameDigitado =
+      document.querySelector<HTMLInputElement>('#username')!.value;
+    const usernameVal = document.querySelector('#usernameVal')!;
+    const regexInvalido = new RegExp('^[a-zA-Z0-9]+$');
+    const regexNumeros = new RegExp('^[0-9]+$');
 
-            form.classList.add("was-validated");
-          },
-          false
-        );
-      });
-    })(); */
+    if (usernameDigitado == '') {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').show();
+      $('#invalido').hide();
+      $('#pequeno').hide();
+      $('#numerozes').hide();
+      return false;
+    } else if (!regexInvalido.test(usernameDigitado)) {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').hide();
+      $('#invalido').show();
+      $('#pequeno').hide();
+      $('#numerozes').hide();
+      return false;
+    } else if (usernameDigitado.length < 4) {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').hide();
+      $('#invalido').hide();
+      $('#pequeno').show();
+      $('#numerozes').hide();
+      return false;
+    } else if (regexNumeros.test(usernameDigitado)) {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').hide();
+      $('#invalido').hide();
+      $('#pequeno').hide();
+      $('#numerozes').show();
+      return false;
+    } else {
+      usernameVal.classList.remove('was-validated');
+      return true;
+    }
   }
 }
