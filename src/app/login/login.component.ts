@@ -9,7 +9,7 @@ type Input = {
   user: string;
   senha: string;
   lembrar?: boolean;
-  metodo: 
+  /* metodo:  */
 };
 
 @Component({
