@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/mixins';
+
+$custom-color: ("gatopediaBlue": #000e7d);
+$theme-colors: map-merge($theme-colors, $custom-color);
+
+@include color-mode(dark) {
+  div.main {
+    box-shadow: 18px 18px 50px -5px #000;
+  }
+}
+
+@include color-mode(light) {
+  div.main {
+    box-shadow: 18px 18px 50px -5px #aaa;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  font-family: "Jost", sans-serif;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  transition: background-color 250ms;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

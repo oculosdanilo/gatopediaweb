@@ -1,0 +1,44 @@
+.divider {
+  height: 80%;
+  align-self: center;
+  width: 1px;
+  background-color: var(--bs-body-color);
+}
+
+.pt1 {
+  margin-top: 1rem;
+  padding: 0 3rem 0 3rem;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pt2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25rem;
+}
+
+.mudarTema {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 0 0 20px 20px;
+}
+
+
+div.main {
+  padding: 20px 0;
+  display: flex;
+  height: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bs-body-bg);
+  border-radius: 20px;
+  z-index: 6;
+}
