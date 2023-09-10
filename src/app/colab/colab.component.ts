@@ -6,6 +6,9 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf, NgOptimizedImage } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -31,10 +34,17 @@ const popupAnimation = trigger('aparecer', [
 ]);
 
 @Component({
-  selector: 'popup-colab',
-  templateUrl: './colab.component.html',
-  styleUrls: ['./colab.component.scss'],
-  animations: [popupAnimation],
+    selector: 'popup-colab',
+    templateUrl: './colab.component.html',
+    styleUrls: ['./colab.component.scss'],
+    animations: [popupAnimation],
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        NgOptimizedImage,
+        MatButtonModule,
+    ],
 })
 export class ColabComponent {
   popup: boolean = false;

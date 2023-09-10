@@ -1,5 +1,6 @@
 import * as $ from 'jquery';
 import { Injectable } from '@angular/core';
+import { cookies } from './cookies.service';
 
 export enum ModoTema {
   claro,
@@ -10,17 +11,20 @@ export enum ModoTema {
   providedIn: 'root',
 })
 export class TemaService {
-  constructor() {}
+  constructor(private cookies: cookies) {}
   modoAtual: ModoTema = ModoTema.escuro;
 
   chequeInicial() {
-    switch ($('html').attr('data-bs-theme')) {
-      case 'dark':
-        this.modoAtual = ModoTema.escuro;
-        break;
-      default:
-        this.modoAtual = ModoTema.claro;
-        break;
+    const modoSalvo: string | null = this.cookies.get('modoTema');
+    if (modoSalvo != null) {
+      switch (modoSalvo) {
+        case 'dark':
+          this.mudarTema(ModoTema.escuro);
+          break;
+        default:
+          this.mudarTema(ModoTema.claro);
+          break;
+      }
     }
   }
 
@@ -29,9 +33,11 @@ export class TemaService {
     switch (novoModo) {
       case ModoTema.escuro:
         $('html').attr('data-bs-theme', 'dark');
+        this.cookies.set('modoTema', 'dark', 365);
         break;
       default:
         $('html').attr('data-bs-theme', 'light');
+        this.cookies.set('modoTema', 'light', 365);
         break;
     }
   }

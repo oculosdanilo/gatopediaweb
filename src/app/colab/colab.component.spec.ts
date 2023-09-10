@@ -8,8 +8,8 @@ describe('ColabComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ColabComponent]
-    });
+    imports: [ColabComponent]
+});
     fixture = TestBed.createComponent(ColabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

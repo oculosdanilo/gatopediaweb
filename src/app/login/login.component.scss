@@ -41,4 +41,5 @@ div.main {
   background-color: var(--bs-body-bg);
   border-radius: 20px;
   z-index: 6;
+  transition: box-shadow 250ms;
 }

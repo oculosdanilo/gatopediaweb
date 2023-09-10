@@ -2,6 +2,10 @@ import { ModoTema, TemaService } from './../tema.service';
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
 import { FirebaseServiceDatabase } from '../firebasedb.service';
+import { ColabComponent } from '../colab/colab.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { NgOptimizedImage, NgIf } from '@angular/common';
 
 /* criar enum */
 
@@ -16,6 +20,14 @@ type Input = {
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [
+    NgOptimizedImage,
+    MatButtonModule,
+    NgIf,
+    MatIconModule,
+    ColabComponent,
+  ],
 })
 export class LoginComponent {
   constructor(

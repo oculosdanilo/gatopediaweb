@@ -1,14 +1,18 @@
 import * as $ from 'jquery';
 import { Component } from '@angular/core';
 import { TemaService } from './tema.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'gatoroot',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet],
 })
 export class AppComponent {
   constructor(private servicoTema: TemaService) {}
+  title = 'gatopediaweb';
 
   ngOnInit() {
     if (window.matchMedia('(max-width: 500px)').matches) {
