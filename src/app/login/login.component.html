@@ -12,7 +12,7 @@
   </div>
   <div class="divider"></div>
   <div class="pt2 my-3">
-    <h1 class="w-100 text-center">Login</h1>
+    <h1 class="w-100 text-center mt-3">Login/Cadastro</h1>
     <form id="auaumiau" class="px-5" novalidate>
       <div
         id="warning"
@@ -77,12 +77,30 @@
         </div>
       </div>
       <div class="d-flex w-100 justify-content-end">
-        <a href="registrar.html" class="btn btn-outline-primary me-2">
-          Cadastrar
-        </a>
-        <button type="submit" class="btn btn-primary">Entrar</button>
+        <div class="btn-group" role="group">
+          <input
+            type="submit"
+            class="btn btn-gatopediaBlue me-1 rounded-pill rounded-end"
+            value="Cadastrar"
+            onclick="this.form.submitted = this.value"
+          />
+          <input
+            type="submit"
+            class="btn btn-gatopediaBlue me-1 rounded-pill rounded-start"
+            value="Entrar"
+            onclick="this.form.submitted = this.value"
+          />
+        </div>
       </div>
     </form>
   </div>
 </div>
+<button mat-icon-button class="mudarTema" (click)="mudarTema()">
+  <mat-icon *ngIf="modoAtual == ModoTema.escuro; else escuro">
+    light_mode
+  </mat-icon>
+  <ng-template #escuro>
+    <mat-icon>dark_mode</mat-icon>
+  </ng-template>
+</button>
 <popup-colab />

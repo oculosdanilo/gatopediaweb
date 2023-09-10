@@ -33,7 +33,7 @@ const popupAnimation = trigger('aparecer', [
 @Component({
   selector: 'popup-colab',
   templateUrl: './colab.component.html',
-  styleUrls: ['./colab.component.css'],
+  styleUrls: ['./colab.component.scss'],
   animations: [popupAnimation],
 })
 export class ColabComponent {

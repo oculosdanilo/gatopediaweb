@@ -12,7 +12,9 @@ import { HomeComponent } from './home/home.component';
 import { ColabComponent } from './colab/colab.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { NgOptimizedImage } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent, ColabComponent],
@@ -25,6 +27,8 @@ import { NgOptimizedImage } from '@angular/common';
     provideDatabase(() => getDatabase()),
     provideStorage(() => getStorage()),
     BrowserAnimationsModule,
+    NgbModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,20 +1,29 @@
+import { ModoTema, TemaService } from './../tema.service';
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
-import 'jquery-validation';
 import { FirebaseServiceDatabase } from '../firebasedb.service';
+
+/* criar enum */
 
 type Input = {
   user: string;
   senha: string;
+  lembrar?: boolean;
+  metodo: 
 };
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  constructor(private database: FirebaseServiceDatabase) {}
+  constructor(
+    private database: FirebaseServiceDatabase,
+    private tema: TemaService
+  ) {}
+  modoAtual = this.tema.temaAtual;
+  ModoTema = ModoTema;
 
   ngOnInit() {
     $('.input-group a').on('mouseout', function (event) {
@@ -28,15 +37,19 @@ export class LoginComponent {
       $('#verSenha').html('visibility');
     });
 
-    $('#username').on('input', (event) => {
+    $('#username').on('input', () => {
       this.validate();
     });
 
     $('form').on('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target as HTMLFormElement);
-      const valores: any[] = [...formData.values()];
-      const inputData: Input = { user: valores[0], senha: valores[1] };
+      const valores: FormDataEntryValue[] = [...formData.values()];
+      const inputData: Input = {
+        user: valores[0].toString(),
+        senha: valores[1].toString(),
+        lembrar: valores[2] != null,
+      };
 
       if (this.validate()) {
         console.log(inputData);
@@ -83,5 +96,14 @@ export class LoginComponent {
       usernameVal.classList.remove('was-validated');
       return true;
     }
+  }
+
+  mudarTema() {
+    if (this.modoAtual == ModoTema.claro) {
+      this.tema.mudarTema(ModoTema.escuro);
+    } else {
+      this.tema.mudarTema(ModoTema.claro);
+    }
+    this.modoAtual = this.tema.temaAtual;
   }
 }
