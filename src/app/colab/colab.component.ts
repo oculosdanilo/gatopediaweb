@@ -60,4 +60,6 @@ export class ColabComponent {
   ngOnInit() {
     this.popup = window.location.href.includes('colab');
   }
+
+
 }

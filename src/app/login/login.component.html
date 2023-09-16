@@ -1,8 +1,14 @@
+<style>
+  #warning {
+    transition: transform 1s;
+    transform: scaleY(0);
+  }
+</style>
 <div class="main">
   <div class="pt1">
     <img
       class="mb-4"
-      ngSrc="assets/icon.webp"
+      ngSrc="/assets/icon.webp"
       alt="Logo do Gatopédia"
       width="304"
       height="304"
@@ -16,7 +22,6 @@
     <form id="auaumiau" class="px-5" novalidate>
       <div
         id="warning"
-        style="transition: transform 1s; transform: scaleY(0)"
       ></div>
       <div class="mb-3">
         <label for="username" class="form-label">Nome de usuário:</label>
@@ -65,7 +70,7 @@
       <div class="mb-3">
         <div class="form-check">
           <input
-            class="form-check-input"
+            class="form-check-input gatopediaBlue"
             name="lembrar"
             type="checkbox"
             id="lembrar"
