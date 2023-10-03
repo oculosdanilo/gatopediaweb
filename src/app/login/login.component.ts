@@ -1,3 +1,4 @@
+import { AuthResponse, Motivo } from './../firebasedb.service';
 import { ModoTema, TemaService } from './../tema.service';
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
@@ -7,13 +8,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NgOptimizedImage, NgIf } from '@angular/common';
 
-/* criar enum */
-
 type Input = {
   user: string;
   senha: string;
   lembrar?: boolean;
-  /* metodo:  */
 };
 
 @Component({
@@ -53,9 +51,17 @@ export class LoginComponent {
       this.validate();
     });
 
-    $('form').on('submit', async (e) => {
+    $('form').on('submit', (e) => {
       e.preventDefault();
-      const formData = new FormData(e.target as HTMLFormElement);
+    });
+
+    $('#entrar').on('click', async () => {
+      $('#entrar').attr('disabled', 'true');
+      $('#entrar').html();
+
+      const formData = new FormData(
+        document.querySelector('form') as HTMLFormElement
+      );
       const valores: FormDataEntryValue[] = [...formData.values()];
       const inputData: Input = {
         user: valores[0].toString(),
@@ -64,7 +70,26 @@ export class LoginComponent {
       };
 
       if (this.validate()) {
-        console.log(inputData);
+        const resposta: AuthResponse = await this.database.autenticacao(
+          inputData.user,
+          inputData.senha
+        );
+        $('#entrar').removeAttr('disabled');
+        if (!resposta.autenticado) {
+          switch (resposta.motivoRejeicao) {
+            case Motivo.naoExiste:
+              console.log('nao existe');
+              break;
+            case Motivo.senhaIncorreta:
+              console.log('senha incorreta');
+              break;
+            default:
+              console.log('erro desconhecido');
+              break;
+          }
+        } else {
+          console.log('sucesso');
+        }
       }
     });
   }

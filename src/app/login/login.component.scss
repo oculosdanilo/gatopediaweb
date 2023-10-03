@@ -29,7 +29,6 @@
   margin: 0 0 20px 20px;
 }
 
-
 div.main {
   padding: 20px 0;
   display: flex;
@@ -42,4 +41,11 @@ div.main {
   border-radius: 20px;
   z-index: 6;
   transition: box-shadow 250ms;
+}
+
+.alert {
+  position: fixed;
+  top: calc(5.8rem + 20px);
+  right: 200px;
+  transform: translate(50%, 0);
 }

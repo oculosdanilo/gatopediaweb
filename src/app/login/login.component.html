@@ -1,9 +1,3 @@
-<style>
-  #warning {
-    transition: transform 1s;
-    transform: scaleY(0);
-  }
-</style>
 <div class="main">
   <div class="pt1">
     <img
@@ -19,10 +13,10 @@
   <div class="divider"></div>
   <div class="pt2 my-3">
     <h1 class="w-100 text-center mt-3">Login/Cadastro</h1>
+    <div class="alert alert-danger">Senha incorreta</div>
+    <div class="alert alert-warning">Usuário não existe</div>
+    <div class="alert alert-warning">Erro desconhecido</div>
     <form id="auaumiau" class="px-5" novalidate>
-      <div
-        id="warning"
-      ></div>
       <div class="mb-3">
         <label for="username" class="form-label">Nome de usuário:</label>
         <div class="input-group" id="usernameVal">
@@ -86,14 +80,14 @@
           <input
             type="submit"
             class="btn btn-gatopediaBlue me-1 rounded-pill rounded-end"
+            id="cadastrar"
             value="Cadastrar"
-            onclick="this.form.submitted = this.value"
           />
           <input
             type="submit"
             class="btn btn-gatopediaBlue me-1 rounded-pill rounded-start"
+            id="entrar"
             value="Entrar"
-            onclick="this.form.submitted = this.value"
           />
         </div>
       </div>
@@ -108,4 +102,5 @@
     <mat-icon>dark_mode</mat-icon>
   </ng-template>
 </button>
+
 <popup-colab />
