@@ -20,6 +20,14 @@
   flex-direction: column;
   justify-content: space-between;
   width: 25rem;
+
+  .alert {
+    position: fixed;
+    top: calc(5.8rem + 20px);
+    right: 7.5rem;
+    transform: scaleY(0);
+    transition: transform 500ms;
+  }
 }
 
 .mudarTema {
@@ -41,11 +49,4 @@ div.main {
   border-radius: 20px;
   z-index: 6;
   transition: box-shadow 250ms;
-}
-
-.alert {
-  position: fixed;
-  top: calc(5.8rem + 20px);
-  right: 200px;
-  transform: translate(50%, 0);
 }

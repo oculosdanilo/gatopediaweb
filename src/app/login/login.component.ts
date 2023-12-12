@@ -48,11 +48,31 @@ export class LoginComponent {
     });
 
     $('#username').on('input', () => {
-      this.validate();
+      this.validateLogin();
     });
 
     $('form').on('submit', (e) => {
       e.preventDefault();
+    });
+
+    $('#cadastrar').on('click', async (): Promise<void> => {
+      $('#cadastrar').attr('disabled', 'true');
+      $('#cadastrar').html();
+
+      const formData = new FormData(
+        document.querySelector('form') as HTMLFormElement
+      );
+      const valores: FormDataEntryValue[] = [...formData.values()];
+      const inputData: Input = {
+        user: valores[0].toString(),
+        senha: valores[1].toString(),
+        lembrar: valores[2] != null,
+      };
+
+      if (this.validateCadastro()) {
+        if ((await this.database.getUser(inputData.user)) != null) {
+        }
+      }
     });
 
     $('#entrar').on('click', async () => {
@@ -69,7 +89,7 @@ export class LoginComponent {
         lembrar: valores[2] != null,
       };
 
-      if (this.validate()) {
+      if (this.validateLogin()) {
         const resposta: AuthResponse = await this.database.autenticacao(
           inputData.user,
           inputData.senha
@@ -78,13 +98,22 @@ export class LoginComponent {
         if (!resposta.autenticado) {
           switch (resposta.motivoRejeicao) {
             case Motivo.naoExiste:
-              console.log('nao existe');
+              $('#naoExiste').css('transform', 'scaleY(1)');
+              setTimeout(() => {
+                $('#naoExiste').css('transform', 'scaleY(0)');
+              }, 5000);
               break;
             case Motivo.senhaIncorreta:
-              console.log('senha incorreta');
+              $('#senhaIncorreta').css('transform', 'scaleY(1)');
+              setTimeout(() => {
+                $('#senhaIncorreta').css('transform', 'scaleY(0)');
+              }, 5000);
               break;
             default:
-              console.log('erro desconhecido');
+              $('#desconhecido').css('transform', 'scaleY(1)');
+              setTimeout(() => {
+                $('#desconhecido').css('transform', 'scaleY(0)');
+              }, 5000);
               break;
           }
         } else {
@@ -94,7 +123,48 @@ export class LoginComponent {
     });
   }
 
-  validate(): boolean {
+  validateLogin(): boolean {
+    const usernameDigitado =
+      document.querySelector<HTMLInputElement>('#username')!.value;
+    const usernameVal = document.querySelector('#usernameVal')!;
+    const regexInvalido = new RegExp('^[a-zA-Z0-9]+$');
+    const regexNumeros = new RegExp('^[0-9]+$');
+
+    if (usernameDigitado == '') {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').show();
+      $('#invalido').hide();
+      $('#pequeno').hide();
+      $('#numerozes').hide();
+      return false;
+    } else if (!regexInvalido.test(usernameDigitado)) {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').hide();
+      $('#invalido').show();
+      $('#pequeno').hide();
+      $('#numerozes').hide();
+      return false;
+    } else if (usernameDigitado.length < 4) {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').hide();
+      $('#invalido').hide();
+      $('#pequeno').show();
+      $('#numerozes').hide();
+      return false;
+    } else if (regexNumeros.test(usernameDigitado)) {
+      usernameVal.classList.add('was-validated');
+      $('#vazio').hide();
+      $('#invalido').hide();
+      $('#pequeno').hide();
+      $('#numerozes').show();
+      return false;
+    } else {
+      usernameVal.classList.remove('was-validated');
+      return true;
+    }
+  }
+
+  validateCadastro(): boolean {
     const usernameDigitado =
       document.querySelector<HTMLInputElement>('#username')!.value;
     const usernameVal = document.querySelector('#usernameVal')!;

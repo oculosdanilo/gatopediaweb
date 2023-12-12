@@ -11,8 +11,9 @@ import {
 } from '@angular/fire/database';
 
 export enum Motivo {
-  naoExiste = 'naoExiste',
-  senhaIncorreta = 'senhaIncorreta',
+  naoExiste,
+  senhaIncorreta,
+  jaExiste,
 }
 
 export type AuthResponse = {
