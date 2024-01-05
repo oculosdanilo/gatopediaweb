@@ -6,7 +6,9 @@ import { FirebaseServiceDatabase } from '../firebasedb.service';
 import { ColabComponent } from '../colab/colab.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgOptimizedImage, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 type Input = {
   user: string;
@@ -25,15 +27,19 @@ type Input = {
     NgIf,
     MatIconModule,
     ColabComponent,
+    MatProgressSpinnerModule,
   ],
 })
 export class LoginComponent {
   constructor(
     private database: FirebaseServiceDatabase,
-    private tema: TemaService
+    private tema: TemaService,
+    private router: Router
   ) {}
   modoAtual = this.tema.temaAtual;
   ModoTema = ModoTema;
+  entrar: boolean | undefined = undefined;
+  cadastrar: boolean | undefined = undefined;
 
   ngOnInit() {
     $('.input-group a').on('mouseout', function (event) {
@@ -57,7 +63,7 @@ export class LoginComponent {
 
     $('#cadastrar').on('click', async (): Promise<void> => {
       $('#cadastrar').attr('disabled', 'true');
-      $('#cadastrar').html();
+      this.cadastrar = true;
 
       const formData = new FormData(
         document.querySelector('form') as HTMLFormElement
@@ -71,13 +77,30 @@ export class LoginComponent {
 
       if (this.validateCadastro()) {
         if ((await this.database.getUser(inputData.user)) != null) {
+          $('#cadastrar').removeAttr('disabled');
+          this.cadastrar = undefined;
+          $('#jaExiste').css('transform', 'scaleY(1)');
+          setTimeout(() => {
+            $('#jaExiste').css('transform', 'scaleY(0)');
+          }, 5000);
+        } else {
+          await this.database.createUser(inputData.user, {
+            senha: btoa(inputData.senha),
+          });
+          document.querySelector('form')?.reset();
+          $('#cadastrar').removeAttr('disabled');
+          this.cadastrar = undefined;
+          $('#sucessoCadastro').css('transform', 'scaleY(1)');
+          setTimeout(() => {
+            $('#sucessoCadastro').css('transform', 'scaleY(0)');
+          }, 7000);
         }
       }
     });
 
     $('#entrar').on('click', async () => {
       $('#entrar').attr('disabled', 'true');
-      $('#entrar').html();
+      this.entrar = true;
 
       const formData = new FormData(
         document.querySelector('form') as HTMLFormElement
@@ -94,7 +117,6 @@ export class LoginComponent {
           inputData.user,
           inputData.senha
         );
-        $('#entrar').removeAttr('disabled');
         if (!resposta.autenticado) {
           switch (resposta.motivoRejeicao) {
             case Motivo.naoExiste:
@@ -116,6 +138,8 @@ export class LoginComponent {
               }, 5000);
               break;
           }
+          $('#entrar').removeAttr('disabled');
+          this.entrar = undefined;
         } else {
           console.log('sucesso');
         }

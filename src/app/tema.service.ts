@@ -1,6 +1,7 @@
 import * as $ from 'jquery';
 import { Injectable } from '@angular/core';
 import { cookies } from './cookies.service';
+import { ThemePalette } from '@angular/material/core';
 
 export enum ModoTema {
   claro,

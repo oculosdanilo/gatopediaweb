@@ -13,7 +13,6 @@ import {
 export enum Motivo {
   naoExiste,
   senhaIncorreta,
-  jaExiste,
 }
 
 export type AuthResponse = {

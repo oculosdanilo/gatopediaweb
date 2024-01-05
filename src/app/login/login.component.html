@@ -17,6 +17,9 @@
     <div id="naoExiste" class="alert alert-warning">Usuário não existe</div>
     <div id="desconhecido" class="alert alert-warning">Erro desconhecido</div>
     <div id="jaExiste" class="alert alert-warning">Usuário já existe</div>
+    <div id="sucessoCadastro" class="alert alert-success">
+      Sucesso! Agora é só repetir as<br />informações e clicar em Entrar
+    </div>
     <form id="auaumiau" class="px-5" novalidate>
       <div class="mb-3">
         <label for="username" class="form-label">Nome de usuário:</label>
@@ -78,18 +81,22 @@
       </div>
       <div class="d-flex w-100 justify-content-end">
         <div class="btn-group" role="group">
-          <input
+          <button
             type="submit"
             class="btn btn-gatopediaBlue me-1 rounded-pill rounded-end"
             id="cadastrar"
-            value="Cadastrar"
-          />
-          <input
+          >
+            <span *ngIf="!cadastrar">Cadastrar</span>
+            <mat-spinner *ngIf="cadastrar" diameter="20"></mat-spinner>
+          </button>
+          <button
             type="submit"
             class="btn btn-gatopediaBlue me-1 rounded-pill rounded-start"
             id="entrar"
-            value="Entrar"
-          />
+          >
+            <span *ngIf="!entrar">Entrar</span>
+            <mat-spinner *ngIf="entrar" diameter="20"></mat-spinner>
+          </button>
         </div>
       </div>
     </form>

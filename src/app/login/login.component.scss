@@ -23,10 +23,14 @@
 
   .alert {
     position: fixed;
-    top: calc(5.8rem + 20px);
+    top: calc(5.8rem + 40px);
     right: 7.5rem;
     transform: scaleY(0);
     transition: transform 500ms;
+
+    &#sucessoCadastro {
+      right: 5rem;
+    }
   }
 }
 
@@ -49,4 +53,14 @@ div.main {
   border-radius: 20px;
   z-index: 6;
   transition: box-shadow 250ms;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: content-box;
+}
+
+.mdc-circular-progress {
+  --mdc-circular-progress-active-indicator-color: white;
 }
