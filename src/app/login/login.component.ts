@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgOptimizedImage, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { cookies } from '../cookies.service';
 
 type Input = {
   user: string;
@@ -34,7 +35,7 @@ export class LoginComponent {
   constructor(
     private database: FirebaseServiceDatabase,
     private tema: TemaService,
-    private router: Router
+    private cookies: cookies
   ) {}
   modoAtual = this.tema.temaAtual;
   ModoTema = ModoTema;
@@ -62,9 +63,6 @@ export class LoginComponent {
     });
 
     $('#cadastrar').on('click', async (): Promise<void> => {
-      $('#cadastrar').attr('disabled', 'true');
-      this.cadastrar = true;
-
       const formData = new FormData(
         document.querySelector('form') as HTMLFormElement
       );
@@ -76,6 +74,10 @@ export class LoginComponent {
       };
 
       if (this.validateCadastro()) {
+        $('#entrar').attr('disabled', 'true');
+        $('#cadastrar').attr('disabled', 'true');
+        this.cadastrar = true;
+
         if ((await this.database.getUser(inputData.user)) != null) {
           $('#cadastrar').removeAttr('disabled');
           this.cadastrar = undefined;
@@ -99,9 +101,6 @@ export class LoginComponent {
     });
 
     $('#entrar').on('click', async () => {
-      $('#entrar').attr('disabled', 'true');
-      this.entrar = true;
-
       const formData = new FormData(
         document.querySelector('form') as HTMLFormElement
       );
@@ -113,6 +112,10 @@ export class LoginComponent {
       };
 
       if (this.validateLogin()) {
+        $('#entrar').attr('disabled', 'true');
+        $('#cadastrar').attr('disabled', 'true');
+        this.entrar = true;
+
         const resposta: AuthResponse = await this.database.autenticacao(
           inputData.user,
           inputData.senha
@@ -141,7 +144,15 @@ export class LoginComponent {
           $('#entrar').removeAttr('disabled');
           this.entrar = undefined;
         } else {
-          console.log('sucesso');
+          $('#entrar').removeAttr('disabled');
+          this.entrar = undefined;
+
+          if (inputData.lembrar) {
+            this.cookies.set('u', btoa(inputData.user), 365);
+          } else {
+            sessionStorage.setItem('u', btoa(inputData.user));
+          }
+          location.reload();
         }
       }
     });
@@ -236,5 +247,10 @@ export class LoginComponent {
       this.tema.mudarTema(ModoTema.claro);
     }
     this.modoAtual = this.tema.temaAtual;
+  }
+
+  miau(): void {
+    const audio = document.querySelector<HTMLAudioElement>('#audio')!;
+    audio.play();
   }
 }

@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { cookies } from './cookies.service';
 import { ColabComponent } from './colab/colab.component';
 
-function sim(): any {
-  if (new cookies().get('logado') != 'sim') {
-    return LoginComponent;
-  } else {
+function sim(): Type<any> {
+  if (new cookies().get('u') != null || sessionStorage.getItem('u') != null) {
     return HomeComponent;
+  } else {
+    return LoginComponent;
   }
 }
 
