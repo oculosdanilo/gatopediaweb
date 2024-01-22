@@ -1,0 +1,24 @@
+nav,
+section {
+  margin-top: 2.5vh;
+  height: 95vh;
+  margin-left: 2.5vh;
+  border-radius: 1.5em;
+}
+
+nav {
+
+  width: 5vw;
+}
+
+section {
+  width: calc((95vw - 10vh) / 2);
+
+  &#wiki {
+    background-color: brown;
+  }
+
+  &#forum {
+    background-color: springgreen;
+  }
+}
