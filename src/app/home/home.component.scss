@@ -1,3 +1,8 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/mixins';
+
 nav,
 section {
   margin-top: 2.5vh;
@@ -7,18 +12,89 @@ section {
 }
 
 nav {
+  background-color: var(--bs-border-color);
+  min-width: 90px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  position: relative;
+  flex-direction: column-reverse;
 
-  width: 5vw;
+  .mudarTema {
+    transform: scale(1.2);
+    margin: 0 auto;
+    margin-bottom: .7em;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    #tooltip {
+      width: max-content;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      background: #222;
+      color: white;
+      font-weight: bold;
+      padding: 5px;
+      border-radius: 4px;
+      font-size: 90%;
+    }
+
+    button {
+      width: 60px;
+      height: 60px;
+      border-radius: 1em;
+      margin-top: 1em;
+      border: none;
+      transition: border-radius 150ms, scale 100ms;
+      background-color: var(--bs-body-bg);
+      position: relative;
+
+      &:first-child {
+        background-image: url("../../assets/user.webp");
+        background-size: cover;
+      }
+
+      :first-child {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(180deg);
+      }
+
+      &#sair {
+        background-color: rgba($red-700, .2);
+        color: $red-400;
+      }
+
+      &:hover {
+        border-radius: 50%;
+      }
+
+      &:active {
+        scale: .9;
+      }
+    }
+  }
 }
 
 section {
-  width: calc((95vw - 10vh) / 2);
+  width: calc((100vw - 90px - 10vh) / 2);
+  background-color: var(--bs-secondary-bg);
+}
 
-  &#wiki {
-    background-color: brown;
-  }
+.bgBlur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: inherit;
 
-  &#forum {
-    background-color: springgreen;
-  }
+  background-color: rgba(0, 0, 0, .2);
+  backdrop-filter: blur(2px);
 }

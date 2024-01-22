@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgOptimizedImage, NgIf } from '@angular/common';
-import { Router } from '@angular/router';
 import { cookies } from '../cookies.service';
 
 type Input = {

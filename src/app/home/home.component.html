@@ -1,5 +1,26 @@
 <div style="display: flex">
-  <nav></nav>
+  <nav>
+    <button mat-icon-button class="mudarTema" (click)="mudarTema()">
+      <mat-icon *ngIf="modoAtual == ModoTema.escuro; else escuro">
+        light_mode
+      </mat-icon>
+      <ng-template #escuro>
+        <mat-icon>dark_mode</mat-icon>
+      </ng-template>
+    </button>
+
+    <div>
+      <button id="profile"></button>
+      <button id="config">
+        <mat-icon>more_horiz</mat-icon>
+      </button>
+      <div @aparecer class="bgBlur" *ngIf="popupSair"></div>
+      <button id="sair" (click)="toggle()">
+        <mat-icon>logout</mat-icon>
+        <div id="tooltip" *ngIf="popupSair">eu acho</div>
+      </button>
+    </div>
+  </nav>
   <section id="wiki"></section>
   <section id="forum"></section>
 </div>

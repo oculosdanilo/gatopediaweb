@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'gatopediaweb';
 
   ngOnInit() {
-    if (window.matchMedia('(max-width: 500px)').matches) {
+    if (window.matchMedia('(max-width: 769px)').matches) {
       const mensagem: string =
         'Oops! Aparentemente você está usando um celular para acessar o site, que não tem otimização para telas menores. Para telefones Android, instale o app pelo Github.\nPor motivos técnicos, não é possível utilizar o aplicativo em celulares com iOS.';
       window.alert(mensagem);
@@ -24,6 +24,12 @@ export class AppComponent {
 
     $('html').on('contextmenu', (e) => {
       e.preventDefault();
+    });
+
+    $(document).on('keydown', (e) => {
+      if (e.key == 'F12') {
+        e.preventDefault();
+      }
     });
   }
 }

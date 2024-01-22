@@ -28,6 +28,10 @@ class CookiesService {
     }
     return null;
   }
+
+  delete(cname: string): void {
+    document.cookie = cname + '=;expires=' + new Date(0).toUTCString();
+  }
 }
 
 export { CookiesService as cookies };
