@@ -5,6 +5,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { ModoTema, TemaService } from '../tema.service';
 import { NgIf } from '@angular/common';
 import { animate, style, transition, trigger } from '@angular/animations';
+import {
+  NgxFloatUiModule,
+  NgxFloatUiPlacements,
+  NgxFloatUiTriggers,
+} from 'ngx-float-ui';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -32,13 +37,15 @@ const popupAnimation = trigger('aparecer', [
   styleUrls: ['./home.component.scss'],
   standalone: true,
   animations: [popupAnimation],
-  imports: [MatButtonModule, MatIconModule, NgIf],
+  imports: [MatButtonModule, MatIconModule, NgIf, NgxFloatUiModule],
 })
 export class HomeComponent {
   username: string = '';
   popupSair: boolean = false;
   botaoSair = document.getElementById('sair')!;
   tooltipSair = document.getElementById('tooltip')!;
+  NgxFloatUiTriggers = NgxFloatUiTriggers;
+  NgxFloatUiPlacements = NgxFloatUiPlacements;
 
   constructor(private cookies: cookies, private tema: TemaService) {}
 

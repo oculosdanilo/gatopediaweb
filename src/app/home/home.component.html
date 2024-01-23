@@ -15,9 +15,17 @@
         <mat-icon>more_horiz</mat-icon>
       </button>
       <div @aparecer class="bgBlur" *ngIf="popupSair"></div>
-      <button id="sair" (click)="toggle()">
+      <float-ui-content #tooltip>
+        <div id="tooltip">eu acho</div>
+      </float-ui-content>
+      <button
+        id="sair"
+        (click)="toggle()"
+        [floatUi]="tooltip"
+        [showTrigger]="NgxFloatUiTriggers.click"
+        [placement]="NgxFloatUiPlacements.RIGHT"
+      >
         <mat-icon>logout</mat-icon>
-        <div id="tooltip" *ngIf="popupSair">eu acho</div>
       </button>
     </div>
   </nav>
