@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
-import { cookies } from '../cookies.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { ModoTema, TemaService } from '../tema.service';
-import { NgIf } from '@angular/common';
-import { animate, style, transition, trigger } from '@angular/animations';
+import {Component} from '@angular/core';
+import {cookies} from '../cookies.service';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {ModoTema, TemaService} from '../tema.service';
+import {NgIf} from '@angular/common';
+import {animate, style, transition, trigger} from '@angular/animations';
 import {
-  NgxFloatUiModule,
   NgxFloatUiPlacements,
   NgxFloatUiTriggers,
 } from 'ngx-float-ui';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
-    style({ opacity: 0 }),
+    style({opacity: 0, x: -40}),
     animate(
       '400ms ease',
       style({
         opacity: 1,
+        x: 0
       })
     ),
   ]),
@@ -25,7 +25,7 @@ const popupAnimation = trigger('aparecer', [
     animate(
       '300ms ease',
       style({
-        opacity: 0,
+        opacity: 0, x: -40,
       })
     ),
   ]),
@@ -37,7 +37,7 @@ const popupAnimation = trigger('aparecer', [
   styleUrls: ['./home.component.scss'],
   standalone: true,
   animations: [popupAnimation],
-  imports: [MatButtonModule, MatIconModule, NgIf, NgxFloatUiModule],
+  imports: [MatButtonModule, MatIconModule, NgIf],
 })
 export class HomeComponent {
   username: string = '';
@@ -46,8 +46,10 @@ export class HomeComponent {
   tooltipSair = document.getElementById('tooltip')!;
   NgxFloatUiTriggers = NgxFloatUiTriggers;
   NgxFloatUiPlacements = NgxFloatUiPlacements;
+  bgBlur = document.getElementById("bgBlur")!;
 
-  constructor(private cookies: cookies, private tema: TemaService) {}
+  constructor(private cookies: cookies, private tema: TemaService) {
+  }
 
   ngOnInit() {
     this.username = atob(this.pegarUsername());
@@ -63,6 +65,7 @@ export class HomeComponent {
 
   modoAtual = this.tema.temaAtual;
   ModoTema = ModoTema;
+
   mudarTema() {
     if (this.modoAtual == ModoTema.claro) {
       this.tema.mudarTema(ModoTema.escuro);

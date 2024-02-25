@@ -1,14 +1,16 @@
-import { AuthResponse, Motivo } from './../firebasedb.service';
-import { ModoTema, TemaService } from './../tema.service';
-import { Component } from '@angular/core';
+// noinspection JSUnresolvedReference
+
+import {AuthResponse, Motivo} from '../firebasedb.service';
+import {ModoTema, TemaService} from '../tema.service';
+import {Component} from '@angular/core';
 import * as $ from 'jquery';
-import { FirebaseServiceDatabase } from '../firebasedb.service';
-import { ColabComponent } from '../colab/colab.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NgOptimizedImage, NgIf } from '@angular/common';
-import { cookies } from '../cookies.service';
+import {FirebaseServiceDatabase} from '../firebasedb.service';
+import {ColabComponent} from '../colab/colab.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {NgOptimizedImage, NgIf} from '@angular/common';
+import {cookies} from '../cookies.service';
 
 type Input = {
   user: string;
@@ -35,7 +37,9 @@ export class LoginComponent {
     private database: FirebaseServiceDatabase,
     private tema: TemaService,
     private cookies: cookies
-  ) {}
+  ) {
+  }
+
   modoAtual = this.tema.temaAtual;
   ModoTema = ModoTema;
   entrar: boolean | undefined = undefined;
@@ -46,8 +50,7 @@ export class LoginComponent {
       event.preventDefault();
       $('#senha').attr('type', 'password');
       $('#verSenha').html('visibility_off');
-    });
-    $('.input-group a').on('mouseover', function (event) {
+    }).on('mouseover', function (event) {
       event.preventDefault();
       $('#senha').attr('type', 'text');
       $('#verSenha').html('visibility');
@@ -72,9 +75,8 @@ export class LoginComponent {
         lembrar: valores[2] != null,
       };
 
-      if (this.validateCadastro()) {
-        $('#entrar').attr('disabled', 'true');
-        $('#cadastrar').attr('disabled', 'true');
+      if (this.validateLogin()) {
+        $('#entrar, #cadastrar').attr('disabled', 'true');
         this.cadastrar = true;
 
         if ((await this.database.getUser(inputData.user)) != null) {
@@ -111,8 +113,7 @@ export class LoginComponent {
       };
 
       if (this.validateLogin()) {
-        $('#entrar').attr('disabled', 'true');
-        $('#cadastrar').attr('disabled', 'true');
+        $('#entrar, #cadastrar').attr('disabled', 'true');
         this.entrar = true;
 
         const resposta: AuthResponse = await this.database.autenticacao(
@@ -158,47 +159,6 @@ export class LoginComponent {
   }
 
   validateLogin(): boolean {
-    const usernameDigitado =
-      document.querySelector<HTMLInputElement>('#username')!.value;
-    const usernameVal = document.querySelector('#usernameVal')!;
-    const regexInvalido = new RegExp('^[a-zA-Z0-9]+$');
-    const regexNumeros = new RegExp('^[0-9]+$');
-
-    if (usernameDigitado == '') {
-      usernameVal.classList.add('was-validated');
-      $('#vazio').show();
-      $('#invalido').hide();
-      $('#pequeno').hide();
-      $('#numerozes').hide();
-      return false;
-    } else if (!regexInvalido.test(usernameDigitado)) {
-      usernameVal.classList.add('was-validated');
-      $('#vazio').hide();
-      $('#invalido').show();
-      $('#pequeno').hide();
-      $('#numerozes').hide();
-      return false;
-    } else if (usernameDigitado.length < 4) {
-      usernameVal.classList.add('was-validated');
-      $('#vazio').hide();
-      $('#invalido').hide();
-      $('#pequeno').show();
-      $('#numerozes').hide();
-      return false;
-    } else if (regexNumeros.test(usernameDigitado)) {
-      usernameVal.classList.add('was-validated');
-      $('#vazio').hide();
-      $('#invalido').hide();
-      $('#pequeno').hide();
-      $('#numerozes').show();
-      return false;
-    } else {
-      usernameVal.classList.remove('was-validated');
-      return true;
-    }
-  }
-
-  validateCadastro(): boolean {
     const usernameDigitado =
       document.querySelector<HTMLInputElement>('#username')!.value;
     const usernameVal = document.querySelector('#usernameVal')!;

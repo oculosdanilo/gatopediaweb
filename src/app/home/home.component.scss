@@ -22,21 +22,21 @@ nav {
 
   .mudarTema {
     transform: scale(1.2);
-    margin: 0 auto;
-    margin-bottom: .7em;
+    margin: 0 auto .7em;
   }
 
   div {
     display: flex;
     flex-direction: column;
 
-    #tooltip {
-      background: #222;
-      color: white;
-      font-weight: bold;
+    .popup {
+      position: absolute;
+      background: cyan;
+      color: black;
       padding: 5px;
       border-radius: 4px;
       font-size: 90%;
+      width: max-content;
     }
 
     button {
