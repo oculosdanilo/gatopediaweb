@@ -25,21 +25,63 @@ nav {
     margin: 0 auto .7em;
   }
 
-  div {
+  div.botoes {
     display: flex;
     flex-direction: column;
 
-    .popup {
+    div.popup {
       position: absolute;
-      background: cyan;
-      color: black;
-      padding: 5px;
-      border-radius: 4px;
+      background: var(--bs-danger-bg-subtle);
+      color: var(--bs-danger);
+      border-radius: 20px;
       font-size: 90%;
       width: max-content;
+      top: calc(60px * 2 + 3em);
+      left: 100px;
+
+      padding: 1.5em;
+
+      h1 {
+        font-weight: bold;
+        font-size: x-large;
+      }
+
+      div {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1em;
+
+        button {
+          border-radius: 10px;
+          width: max-content;
+          height: max-content;
+          padding: 5px 15px;
+          transition: border-radius .2s cubic-bezier(.2, 0, 0, 1), scale 150ms;
+
+          color: var(--bs-body-color);
+          background-color: transparent;
+          border: 1px solid var(--bs-danger);
+          font-size: large;
+
+          &:last-child {
+            margin-left: 1em;
+            background-color: var(--bs-danger);
+            border: none;
+            color: white;
+          }
+
+          &:hover {
+            border-radius: 50px;
+          }
+
+          &:active {
+            scale: .9;
+          }
+        }
+      }
     }
 
-    button {
+    button:not(#sairSair, #cancelarSair) {
       width: 60px;
       height: 60px;
       border-radius: 1em;
@@ -49,7 +91,7 @@ nav {
       background-color: var(--bs-body-bg);
       position: relative;
 
-      &:first-child {
+      &#profile {
         background-image: url("../../assets/user.webp");
         background-size: cover;
       }
@@ -62,8 +104,8 @@ nav {
       }
 
       &#sair {
-        background-color: rgba($red-700, .2);
-        color: $red-400;
+        background-color: var(--bs-danger-bg-subtle);
+        color: var(--bs-danger);
       }
 
       &:hover {

@@ -9,7 +9,7 @@
       </ng-template>
     </button>
 
-    <div>
+    <div class="botoes">
       <button id="profile"></button>
       <button id="config">
         <mat-icon>more_horiz</mat-icon>
@@ -22,7 +22,17 @@
         <mat-icon>logout</mat-icon>
       </button>
       <div @aparecer class="popup" *ngIf="popupSair">
-        exatamente beijos
+        <h1>
+          Tem certeza que deseja sair?
+        </h1>
+        <div>
+          <button (click)="toggle()" id="cancelarSair">
+            Cancelar
+          </button>
+          <button (click)="sair()" id="sairSair">
+            Sair
+          </button>
+        </div>
       </div>
     </div>
   </nav>

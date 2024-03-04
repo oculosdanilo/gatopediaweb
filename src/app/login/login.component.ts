@@ -5,7 +5,7 @@ import {ModoTema, TemaService} from '../tema.service';
 import {Component} from '@angular/core';
 import * as $ from 'jquery';
 import {FirebaseServiceDatabase} from '../firebasedb.service';
-import {ColabComponent} from '../colab/colab.component';
+import {ColabComponent} from './colab/colab.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';

@@ -5,10 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {ModoTema, TemaService} from '../tema.service';
 import {NgIf} from '@angular/common';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {
-  NgxFloatUiPlacements,
-  NgxFloatUiTriggers,
-} from 'ngx-float-ui';
+import {computePosition} from "@floating-ui/dom";
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -42,10 +39,8 @@ const popupAnimation = trigger('aparecer', [
 export class HomeComponent {
   username: string = '';
   popupSair: boolean = false;
-  botaoSair = document.getElementById('sair')!;
+  botaoSair: Element = document.getElementById('sair')!;
   tooltipSair = document.getElementById('tooltip')!;
-  NgxFloatUiTriggers = NgxFloatUiTriggers;
-  NgxFloatUiPlacements = NgxFloatUiPlacements;
   bgBlur = document.getElementById("bgBlur")!;
 
   constructor(private cookies: cookies, private tema: TemaService) {
@@ -53,6 +48,15 @@ export class HomeComponent {
 
   ngOnInit() {
     this.username = atob(this.pegarUsername());
+
+    computePosition(this.botaoSair, this.tooltipSair, {
+      placement: "bottom",
+    })
+      .then(({x, y}) => {
+        /*Object.assign(this.tooltipSair.style, {left: `${x}px`, top: `${y}px`})*/
+        this.tooltipSair.style.left = x + "px";
+        this.tooltipSair.style.top = y + "px";
+      });
   }
 
   pegarUsername(): string {
