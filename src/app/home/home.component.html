@@ -11,22 +11,38 @@
 
     <div class="botoes">
       <button id="profile"></button>
-      <button id="config">
+      <button id="config" (click)="toggleConfig()">
         <mat-icon>more_horiz</mat-icon>
       </button>
-      <div @aparecer (click)="toggle()" class="bgBlur" *ngIf="popupSair"></div>
+      <div @aparecer class="popupConfig" *ngIf="popupConfig">
+        <h1>Gatopédia! Web</h1>
+        <p>feito com &#x2764; por Danilo Lima</p>
+        <p>&copy; {{ ano }} oculosdanilo <br>Todos os direitos reservados</p>
+
+        <mat-divider class="configDivider"/>
+
+        <a mat-raised-button href="https://github.com/oculosdanilo/gatopediaweb" target="_blank">
+          <span nz-icon nzType="github" nzTheme="outline"></span>
+          Repositório
+        </a> <br>
+        <a mat-raised-button href="https://etec199-danilolima.xp3.biz/2023/0318" target="_blank">
+          <mat-icon>language</mat-icon>
+          Site principal
+        </a>
+      </div>
+      <div @aparecer (click)="toggleSair()" class="bgBlur" *ngIf="popupSair"></div>
       <button
         id="sair"
-        (click)="toggle()"
+        (click)="toggleSair()"
       >
         <mat-icon>logout</mat-icon>
       </button>
-      <div @aparecer class="popup" *ngIf="popupSair">
+      <div @aparecer class="popupSair" *ngIf="popupSair">
         <h1>
           Tem certeza que deseja sair?
         </h1>
         <div>
-          <button (click)="toggle()" id="cancelarSair">
+          <button (click)="toggleSair()" id="cancelarSair">
             Cancelar
           </button>
           <button (click)="sair()" id="sairSair">

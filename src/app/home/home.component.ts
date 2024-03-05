@@ -5,13 +5,14 @@ import {MatIconModule} from '@angular/material/icon';
 import {ModoTema, TemaService} from '../tema.service';
 import {NgIf} from '@angular/common';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {computePosition} from "@floating-ui/dom";
+import {MatDividerModule} from '@angular/material/divider';
+import {NzIconModule} from 'ng-zorro-antd/icon';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
     style({opacity: 0, x: -40}),
     animate(
-      '400ms ease',
+      '200ms ease',
       style({
         opacity: 1,
         x: 0
@@ -20,7 +21,7 @@ const popupAnimation = trigger('aparecer', [
   ]),
   transition(':leave', [
     animate(
-      '300ms ease',
+      '200ms ease',
       style({
         opacity: 0, x: -40,
       })
@@ -34,29 +35,24 @@ const popupAnimation = trigger('aparecer', [
   styleUrls: ['./home.component.scss'],
   standalone: true,
   animations: [popupAnimation],
-  imports: [MatButtonModule, MatIconModule, NgIf],
+  imports: [MatButtonModule, MatIconModule, NgIf, MatDividerModule, NzIconModule],
 })
 export class HomeComponent {
-  username: string = '';
-  popupSair: boolean = false;
-  botaoSair: Element = document.getElementById('sair')!;
+  username = '';
+  botaoSair = document.getElementById('sair')!;
   tooltipSair = document.getElementById('tooltip')!;
-  bgBlur = document.getElementById("bgBlur")!;
+  bgBlur = document.getElementById('bgBlur')!;
+  ano = new Date().getFullYear();
+
+  popupSair = false;
+  popupConfig = false;
+  popupProfile = false;
 
   constructor(private cookies: cookies, private tema: TemaService) {
   }
 
   ngOnInit() {
     this.username = atob(this.pegarUsername());
-
-    computePosition(this.botaoSair, this.tooltipSair, {
-      placement: "bottom",
-    })
-      .then(({x, y}) => {
-        /*Object.assign(this.tooltipSair.style, {left: `${x}px`, top: `${y}px`})*/
-        this.tooltipSair.style.left = x + "px";
-        this.tooltipSair.style.top = y + "px";
-      });
   }
 
   pegarUsername(): string {
@@ -79,8 +75,15 @@ export class HomeComponent {
     this.modoAtual = this.tema.temaAtual;
   }
 
-  toggle() {
+  toggleSair() {
     this.popupSair = !this.popupSair;
+    this.popupConfig = false;
+    this.popupProfile = false;
+  }
+
+  toggleConfig() {
+    this.popupConfig = !this.popupConfig;
+    this.popupProfile = false;
   }
 
   sair() {

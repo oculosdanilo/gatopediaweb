@@ -29,7 +29,36 @@ nav {
     display: flex;
     flex-direction: column;
 
-    div.popup {
+    .popupConfig {
+      position: absolute;
+      background: var(--bs-border-color);
+      color: var(--bs-body-color);
+      border-radius: 20px;
+      font-size: 90%;
+      width: max-content;
+      top: calc(60px * 1 + 2em);
+      left: 100px;
+
+      padding: 1.5em;
+
+      .configDivider {
+        background-color: var(--bs-body-color);
+        margin-bottom: 1em;
+      }
+
+      a {
+        font-size: large;
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: medium;
+          vertical-align: .1em;
+        }
+      }
+    }
+
+    .popupSair {
       position: absolute;
       background: var(--bs-danger-bg-subtle);
       color: var(--bs-danger);

@@ -56,6 +56,10 @@ export class LoginComponent {
       $('#verSenha').html('visibility');
     });
 
+    $("#audio").on("ended", () => {
+      document.title = "Gatopédia!";
+    });
+
     $('#username').on('input', () => {
       this.validateLogin();
     });
@@ -210,6 +214,7 @@ export class LoginComponent {
 
   miau(): void {
     const audio = document.querySelector<HTMLAudioElement>('#audio')!;
-    audio.play();
+    document.title = "miau";
+    audio.play().then();
   }
 }
