@@ -1,7 +1,8 @@
+// noinspection JSJQueryEfficiency
+
 import * as $ from 'jquery';
-import { Injectable } from '@angular/core';
-import { cookies } from './cookies.service';
-import { ThemePalette } from '@angular/material/core';
+import {Injectable} from '@angular/core';
+import {cookies} from './cookies.service';
 
 export enum ModoTema {
   claro,
@@ -12,7 +13,9 @@ export enum ModoTema {
   providedIn: 'root',
 })
 export class TemaService {
-  constructor(private cookies: cookies) {}
+  constructor(private cookies: cookies) {
+  }
+
   modoAtual: ModoTema = ModoTema.escuro;
 
   chequeInicial() {

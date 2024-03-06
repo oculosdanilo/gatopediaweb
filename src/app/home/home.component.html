@@ -10,7 +10,8 @@
     </button>
 
     <div class="botoes">
-      <button id="profile"></button>
+      <button id="profile" (click)="toggleProfile()"></button>
+      <div @aparecer class="popupProfile" *ngIf="popupProfile"></div>
       <button id="config" (click)="toggleConfig()">
         <mat-icon>more_horiz</mat-icon>
       </button>

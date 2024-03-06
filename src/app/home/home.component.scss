@@ -29,6 +29,19 @@ nav {
     display: flex;
     flex-direction: column;
 
+    .popupProfile {
+      position: absolute;
+      background: var(--bs-border-color);
+      color: var(--bs-body-color);
+      border-radius: 20px;
+      font-size: 90%;
+      width: max-content;
+      top: 1em;
+      left: 100px;
+
+      padding: 1.5em
+    }
+
     .popupConfig {
       position: absolute;
       background: var(--bs-border-color);

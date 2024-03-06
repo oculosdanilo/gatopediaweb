@@ -7,15 +7,16 @@ import {NgIf} from '@angular/common';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {MatDividerModule} from '@angular/material/divider';
 import {NzIconModule} from 'ng-zorro-antd/icon';
+import {FirebaseServiceDatabase, User} from '../firebasedb.service';
+import {FirebaseServiceStorage} from '../firebasest.service';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
-    style({opacity: 0, x: -40}),
+    style({opacity: 0}),
     animate(
       '200ms ease',
       style({
         opacity: 1,
-        x: 0
       })
     ),
   ]),
@@ -23,11 +24,13 @@ const popupAnimation = trigger('aparecer', [
     animate(
       '200ms ease',
       style({
-        opacity: 0, x: -40,
+        opacity: 0,
       })
     ),
   ]),
 ]);
+
+export var userInfo: User;
 
 @Component({
   selector: 'app-home',
@@ -48,11 +51,29 @@ export class HomeComponent {
   popupConfig = false;
   popupProfile = false;
 
-  constructor(private cookies: cookies, private tema: TemaService) {
+  constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase, private firebaseSt: FirebaseServiceStorage) {
   }
 
   ngOnInit() {
     this.username = atob(this.pegarUsername());
+
+    this.init().then();
+
+    $(document).on('click', (e) => {
+      console.log(e.target);
+    });
+  }
+
+  async init() {
+    const userInfoDB = await this.firebaseDB.getUser(this.username);
+    if (userInfoDB)
+      userInfo = userInfoDB;
+
+    if (userInfo.img) {
+      const imagemURL = await this.firebaseSt.pegarFotoDoUsuario(this.username);
+
+      $('#profile').css('background-image', `url(${imagemURL})`);
+    }
   }
 
   pegarUsername(): string {
@@ -84,6 +105,11 @@ export class HomeComponent {
   toggleConfig() {
     this.popupConfig = !this.popupConfig;
     this.popupProfile = false;
+  }
+
+  toggleProfile() {
+    this.popupProfile = !this.popupProfile;
+    this.popupConfig = false;
   }
 
   sair() {

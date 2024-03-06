@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {
   DataSnapshot,
   Database,
@@ -32,14 +32,15 @@ export var posts: [];
   providedIn: 'root',
 })
 export class FirebaseServiceDatabase {
-  constructor(private database: Database) {}
+  constructor(private database: Database) {
+  }
+
   unsubscribe!: Unsubscribe;
 
   async getUser(user: string): Promise<User | null> {
-    const userInfo: User = (
+    return (
       await get(ref(this.database, 'users/' + user))
     ).val();
-    return userInfo;
   }
 
   async autenticacao(
@@ -49,11 +50,11 @@ export class FirebaseServiceDatabase {
     const userInfo = await this.getUser(user);
 
     if (userInfo == null) {
-      return { autenticado: false, motivoRejeicao: Motivo.naoExiste };
+      return {autenticado: false, motivoRejeicao: Motivo.naoExiste};
     } else if (btoa(senhaDigitada) != userInfo.senha) {
-      return { autenticado: false, motivoRejeicao: Motivo.senhaIncorreta };
+      return {autenticado: false, motivoRejeicao: Motivo.senhaIncorreta};
     } else {
-      return { autenticado: true };
+      return {autenticado: true};
     }
   }
 
@@ -62,7 +63,7 @@ export class FirebaseServiceDatabase {
   }
 
   updateBio(user: string, value: string): Promise<void> {
-    return update(ref(this.database, 'users/' + user), { bio: value });
+    return update(ref(this.database, 'users/' + user), {bio: value});
   }
 
   pegarGatos(): Promise<DataSnapshot> {
