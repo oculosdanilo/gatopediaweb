@@ -11,6 +11,11 @@ section {
   border-radius: 1.5em;
 }
 
+.configDivider {
+  background-color: var(--bs-body-color);
+  margin-bottom: 1em;
+}
+
 nav {
   background-color: var(--bs-border-color);
   min-width: 90px;
@@ -39,7 +44,57 @@ nav {
       top: 1em;
       left: 100px;
 
-      padding: 1.5em
+      padding: 1.5em;
+
+      .user {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5em;
+
+        #profilePic {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          margin-right: 1.5em;
+          position: relative;
+          overflow: hidden;
+
+          #profileSelect {
+            display: none;
+          }
+
+          button {
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            border: none;
+            background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            opacity: 0;
+            transition: opacity .25s;
+
+            &:hover {
+              opacity: 1;
+            }
+
+            * {
+              scale: 2;
+              color: white;
+            }
+          }
+        }
+
+        #username {
+          font-size: xx-large;
+        }
+      }
     }
 
     .popupConfig {
@@ -53,11 +108,6 @@ nav {
       left: 100px;
 
       padding: 1.5em;
-
-      .configDivider {
-        background-color: var(--bs-body-color);
-        margin-bottom: 1em;
-      }
 
       a {
         font-size: large;
@@ -123,7 +173,7 @@ nav {
       }
     }
 
-    button:not(#sairSair, #cancelarSair) {
+    button:not(#sairSair, #cancelarSair, #selecionarFoto) {
       width: 60px;
       height: 60px;
       border-radius: 1em;
@@ -132,13 +182,15 @@ nav {
       transition: border-radius 150ms, scale 100ms;
       background-color: var(--bs-body-bg);
       position: relative;
+      padding: 0;
 
       &#profile {
-        background-image: url("../../assets/user.webp");
-        background-size: cover;
+        overflow: hidden;
+
+        display: flex;
       }
 
-      :first-child {
+      :first-child:not(img) {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -164,6 +216,55 @@ nav {
 section {
   width: calc((100vw - 90px - 10vh) / 2);
   background-color: var(--bs-secondary-bg);
+}
+
+#photoEdit {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 500px;
+  background-color: var(--bs-body-bg);
+  border-radius: 30px;
+  padding: 30px;
+
+  #crop {
+    max-width: 100%;
+    max-height: 70vh;
+
+    height: 80%;
+    width: 100%;
+  }
+
+  button {
+    border-radius: 10px;
+    width: max-content;
+    height: max-content;
+    padding: 5px 15px;
+    transition: border-radius .2s cubic-bezier(.2, 0, 0, 1), scale 150ms;
+
+    color: var(--bs-body-color);
+    background-color: transparent;
+    border: 1px solid var(--bs-body-color);
+    font-size: large;
+
+    &:last-child {
+      margin-left: 1em;
+      background-color: var(--bs-body-color);
+      border: none;
+      color: var(--bs-body-bg);
+    }
+
+    &:hover {
+      border-radius: 50px;
+    }
+
+    &:active {
+      scale: .9;
+    }
+  }
+
 }
 
 .bgBlur {

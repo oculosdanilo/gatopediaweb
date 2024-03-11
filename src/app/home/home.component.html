@@ -1,4 +1,6 @@
-<div style="display: flex">
+<div style="display: flex; flex-direction: row-reverse; justify-content: flex-end">
+  <section id="forum"></section>
+  <section id="wiki"></section>
   <nav>
     <button mat-icon-button class="mudarTema" (click)="mudarTema()">
       <mat-icon *ngIf="modoAtual == ModoTema.escuro; else escuro">
@@ -10,8 +12,29 @@
     </button>
 
     <div class="botoes">
-      <button id="profile" (click)="toggleProfile()"></button>
-      <div @aparecer class="popupProfile" *ngIf="popupProfile"></div>
+
+      <button id="profile" (click)="toggleProfile()">
+        <img ngSrc="{{ src }}" alt="" width="60" height="60" priority>
+      </button>
+      <div @aparecer class="popupProfile" *ngIf="popupProfile">
+        <div class="user">
+          <div id="profilePic">
+            <img ngSrc="{{ src }}" alt="" width="100" height="100" priority>
+            <input type="file" name="profileSelect" id="profileSelect" (change)="quandoPegarFoto()"
+                   #profileSelect accept=".jpg,.jpeg,.png">
+            <button id="selecionarFoto" (click)="profileSelect.click()">
+              <mat-icon>add_photo_alternate</mat-icon>
+            </button>
+          </div>
+          <h1 id="username">{{ username }}</h1>
+        </div>
+
+        <mat-divider class="configDivider"/>
+
+        <div id="bio"></div>
+        <div id="deletarConta"></div>
+      </div>
+
       <button id="config" (click)="toggleConfig()">
         <mat-icon>more_horiz</mat-icon>
       </button>
@@ -31,6 +54,7 @@
           Site principal
         </a>
       </div>
+
       <div @aparecer (click)="toggleSair()" class="bgBlur" *ngIf="popupSair"></div>
       <button
         id="sair"
@@ -51,8 +75,19 @@
           </button>
         </div>
       </div>
+
     </div>
   </nav>
-  <section id="wiki"></section>
-  <section id="forum"></section>
+
+  <div id="photoEdit" *ngIf="popupProfileEdit">
+    <div>
+      <!--suppress AngularNgOptimizedImage -->
+      <img src="" alt="" id="crop">
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 1.5em">
+      <button id="cancelarCrop">CANCELAR</button>
+      <button id="salvarCrop">SALVAR</button>
+    </div>
+  </div>
 </div>
