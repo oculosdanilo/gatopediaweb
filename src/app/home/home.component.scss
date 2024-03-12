@@ -41,10 +41,31 @@ nav {
       border-radius: 20px;
       font-size: 90%;
       width: max-content;
+      max-width: 400px;
       top: 1em;
       left: 100px;
 
       padding: 1.5em;
+
+      h2 {
+        font-size: medium;
+        font-weight: bold;
+      }
+
+      #idle {
+        display: flex;
+        position: relative;
+
+        p {
+          font-size: large;
+        }
+
+        button {
+          position: absolute;
+          top: -40%;
+          right: 0;
+        }
+      }
 
       .user {
         display: flex;

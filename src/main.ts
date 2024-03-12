@@ -24,6 +24,5 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule, AppRoutingModule, MatButtonModule, NgOptimizedImage, provideFirebaseApp(() => initializeApp(environment.firebase)), provideDatabase(() => getDatabase()), provideStorage(() => getStorage()), NgbModule, MatIconModule),
     provideAnimations(), provideNzI18n(pt_BR), importProvidersFrom(FormsModule), importProvidersFrom(HttpClientModule),
-    provideAnimations()
   ],
 }).catch((err) => console.error(err));

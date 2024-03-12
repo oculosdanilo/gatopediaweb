@@ -31,16 +31,16 @@
 
         <mat-divider class="configDivider"/>
 
-        <div id="bio">
+        <div>
           <h2>Bio</h2>
           <div id="idle" *ngIf="!editMode; else editando">
             <p>{{ userBio }}</p>
-            <button mat-icon-button id="editBio">
-              edit
+            <button mat-icon-button id="editBio" (click)="toggleEditMode()">
+              <mat-icon>edit</mat-icon>
             </button>
           </div>
           <ng-template id="editando" #editando>
-
+            <textarea name="Nova bio" maxlength="255" placeholder="(vazio)">
           </ng-template>
         </div>
         <div id="deletarConta"></div>

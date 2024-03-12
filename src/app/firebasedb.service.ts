@@ -59,7 +59,7 @@ export class FirebaseServiceDatabase {
   }
 
   createUser(user: string, value: { senha: string }) {
-    return set(ref(this.database, 'users/' + user), value);
+    return set(ref(this.database, 'users/' + user), {...value, bio: '(vazio)'});
   }
 
   updateBio(user: string, value: string) {

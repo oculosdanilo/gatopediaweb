@@ -11,6 +11,8 @@ import {FirebaseServiceDatabase, User} from '../firebasedb.service';
 import {FirebaseServiceStorage} from '../firebasest.service';
 import Cropper from 'cropperjs';
 import {user} from '@angular/fire/auth';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -40,7 +42,7 @@ export var userInfo: User;
   styleUrls: ['./home.component.scss'],
   standalone: true,
   animations: [popupAnimation],
-  imports: [MatButtonModule, MatIconModule, NgIf, MatDividerModule, NzIconModule, NgOptimizedImage, MatButtonModule],
+  imports: [MatButtonModule, MatIconModule, NgIf, MatDividerModule, NzIconModule, NgOptimizedImage, MatButtonModule, MatFormFieldModule, MatInputModule],
 })
 export class HomeComponent {
   username = '';
@@ -50,7 +52,6 @@ export class HomeComponent {
   ano = new Date().getFullYear();
   jaPegouFoto_profilePic: boolean = false;
   photoEdit = document.getElementById('photoEdit')!;
-  editMode = false;
   userBio = '(vazio)';
 
   src = 'assets/user.webp';
@@ -59,6 +60,7 @@ export class HomeComponent {
   popupConfig = false;
   popupProfile = false;
   popupProfileEdit = false;
+  editMode = true;
 
   constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase,
               private firebaseSt: FirebaseServiceStorage) {
