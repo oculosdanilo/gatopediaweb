@@ -22,7 +22,7 @@
             <img ngSrc="{{ src }}" alt="" width="100" height="100" priority>
             <input type="file" name="profileSelect" id="profileSelect" (change)="quandoPegarFoto()"
                    #profileSelect accept=".jpg,.jpeg,.png">
-            <button id="selecionarFoto" (click)="profileSelect.click()">
+            <button class="notNav" id="selecionarFoto" (click)="profileSelect.click()">
               <mat-icon>add_photo_alternate</mat-icon>
             </button>
           </div>
@@ -35,12 +35,18 @@
           <h2>Bio</h2>
           <div id="idle" *ngIf="!editMode; else editando">
             <p>{{ userBio }}</p>
-            <button mat-icon-button id="editBio" (click)="toggleEditMode()">
+            <button mat-icon-button id="editBio" class="notNav" (click)="toggleEditMode()">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
-          <ng-template id="editando" #editando>
-            <textarea name="Nova bio" maxlength="255" placeholder="(vazio)">
+          <ng-template #editando>
+            <div id="editando">
+              <textarea id="novaBio" name="Nova bio" maxlength="255" placeholder="(vazio)" [value]="userBio"></textarea>
+              <div style="display: flex; justify-content: flex-end">
+                <button class="notNav" (click)="toggleEditMode()">CANCELAR</button>
+                <button class="notNav" (click)="atualizarBio()">SALVAR</button>
+              </div>
+            </div>
           </ng-template>
         </div>
         <div id="deletarConta"></div>

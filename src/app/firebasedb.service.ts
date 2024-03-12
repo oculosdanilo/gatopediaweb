@@ -1,14 +1,5 @@
 import {Injectable} from '@angular/core';
-import {
-  DataSnapshot,
-  Database,
-  Unsubscribe,
-  get,
-  onValue,
-  ref,
-  set,
-  update,
-} from '@angular/fire/database';
+import {Database, DataSnapshot, get, onValue, ref, set, Unsubscribe, update,} from '@angular/fire/database';
 
 export enum Motivo {
   naoExiste,
@@ -63,7 +54,7 @@ export class FirebaseServiceDatabase {
   }
 
   updateBio(user: string, value: string) {
-    return update(ref(this.database, 'users/' + user), {bio: value});
+    return update(ref(this.database, `users/${user}/`), {bio: value});
   }
 
   pegarGatos(): Promise<DataSnapshot> {

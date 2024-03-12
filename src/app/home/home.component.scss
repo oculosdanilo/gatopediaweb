@@ -42,6 +42,7 @@ nav {
       font-size: 90%;
       width: max-content;
       max-width: 400px;
+
       top: 1em;
       left: 100px;
 
@@ -64,6 +65,51 @@ nav {
           position: absolute;
           top: -40%;
           right: 0;
+        }
+      }
+
+      #editando {
+        textarea {
+          width: 100%;
+          max-height: 100px;
+
+          background-color: transparent;
+          margin-bottom: .5em;
+          padding: 10px;
+          border-radius: 5px;
+          transition: border-radius .1s;
+
+          &:focus {
+            border-radius: 10px;
+          }
+        }
+
+        button {
+          border-radius: 9999px;
+          padding: 2.5px 10px;
+          transition: opacity .1s;
+          opacity: 1;
+
+          &:first-child {
+            background-color: transparent;
+            border: 2px solid var(--bs-body-color);
+            color: var(--bs-body-color);
+            margin-right: 1em
+          }
+
+          &:last-child {
+            background-color: var(--bs-body-color);
+            border: none;
+            color: var(--bs-body-bg);
+          }
+
+          &:active {
+            opacity: .6;
+
+            &[disabled] {
+              opacity: 1;
+            }
+          }
         }
       }
 
@@ -194,7 +240,7 @@ nav {
       }
     }
 
-    button:not(#sairSair, #cancelarSair, #selecionarFoto, #editBio) {
+    button:not(.notNav) {
       width: 60px;
       height: 60px;
       border-radius: 1em;

@@ -60,7 +60,7 @@ export class HomeComponent {
   popupConfig = false;
   popupProfile = false;
   popupProfileEdit = false;
-  editMode = true;
+  editMode = false;
 
   constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase,
               private firebaseSt: FirebaseServiceStorage) {
@@ -75,7 +75,6 @@ export class HomeComponent {
   async init() {
     userInfo = (await this.firebaseDB.getUser(this.username))!;
     this.userBio = userInfo.bio;
-    console.log(userInfo.bio);
 
     if (userInfo.img)
       this.src = await this.firebaseSt.pegarFotoDoUsuario(this.username);
@@ -163,6 +162,27 @@ export class HomeComponent {
 
   toggleEditMode() {
     this.editMode = !this.editMode;
+  }
+
+  atualizarBio() {
+    $('#editando div button').attr('disabled', 'true');
+    let novaBio = $('#novaBio').val() as string;
+
+    if (novaBio !== '') {
+      this.firebaseDB.updateBio(this.username, novaBio).then(() => {
+        this.init().then(() => {
+          $('#editando div button').removeAttr('disabled');
+          this.toggleEditMode();
+        });
+      });
+    } else {
+      this.firebaseDB.updateBio(this.username, '(vazio)').then(() => {
+        this.init().then(() => {
+          $('#editando div button').removeAttr('disabled');
+          this.toggleEditMode();
+        });
+      });
+    }
   }
 
   sair() {

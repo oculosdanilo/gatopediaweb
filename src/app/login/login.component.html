@@ -2,7 +2,8 @@
   <div class="pt1">
     <img
       class="mb-4"
-      ngSrc="/assets/icon.webp"
+      style="border-radius: 25px"
+      ngSrc="/assets/newIcon.webp"
       alt="Logo do Gatopédia"
       width="304"
       height="304"
@@ -18,14 +19,14 @@
     <div id="desconhecido" class="alert alert-warning">Erro desconhecido</div>
     <div id="jaExiste" class="alert alert-warning">Usuário já existe</div>
     <div id="sucessoCadastro" class="alert alert-success">
-      Sucesso! Agora é só repetir as<br />informações e clicar em Entrar
+      Sucesso! Agora é só repetir as<br/>informações e clicar em Entrar
     </div>
     <form id="auaumiau" class="px-5" novalidate>
       <div class="mb-3">
         <label for="username" class="form-label">Nome de usuário:</label>
         <div class="input-group" id="usernameVal">
           <span class="input-group-text" style="border-radius: 50px 0 0 50px">
-            &#64;
+            &commat;
           </span>
           <input
             name="username"
@@ -111,8 +112,8 @@
   </ng-template>
 </button>
 <button mat-icon-button class="miau" (click)="miau()">
-  <mat-icon> pets </mat-icon>
+  <mat-icon> pets</mat-icon>
 </button>
 <audio src="/assets/miau.m4a" id="audio" [volume]="0.2"></audio>
 
-<popup-colab />
+<popup-colab/>
