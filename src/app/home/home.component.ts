@@ -10,6 +10,7 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {FirebaseServiceDatabase, User} from '../firebasedb.service';
 import {FirebaseServiceStorage} from '../firebasest.service';
 import Cropper from 'cropperjs';
+import {user} from '@angular/fire/auth';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -49,6 +50,8 @@ export class HomeComponent {
   ano = new Date().getFullYear();
   jaPegouFoto_profilePic: boolean = false;
   photoEdit = document.getElementById('photoEdit')!;
+  editMode = false;
+  userBio = '(vazio)';
 
   src = 'assets/user.webp';
 
@@ -63,22 +66,25 @@ export class HomeComponent {
 
   ngOnInit() {
     this.username = atob(this.pegarUsername());
-    this.username = atob(this.pegarUsername());
 
     this.init().then();
   }
 
   async init() {
     userInfo = (await this.firebaseDB.getUser(this.username))!;
+    this.userBio = userInfo.bio;
+    console.log(userInfo.bio);
 
     if (userInfo.img)
       this.src = await this.firebaseSt.pegarFotoDoUsuario(this.username);
   }
 
   quandoPegarFoto() {
+    this.toggleProfileEdit();
+
     const profileSelect = document.getElementById('profileSelect') as HTMLInputElement;
     const file = profileSelect.files![0];
-    const fr = new FileReader();
+    let fr = new FileReader();
 
     fr.onload = () => {
       let crop = document.getElementById('crop') as HTMLImageElement;
@@ -90,7 +96,19 @@ export class HomeComponent {
 
         $('#salvarCrop').on('click', () => {
           let canv = c.getCroppedCanvas();
-          console.log(canv.toDataURL());
+          $('#photoEdit').css('display', 'none');
+
+          canv.toBlob((blob) => {
+              if (blob)
+                this.firebaseSt.subirFotoDoUsuario(this.username, blob).then(async () => {
+                  c.clear();
+                  await this.firebaseDB.setImg(this.username);
+                  await this.init();
+                  this.toggleProfileEdit();
+                });
+            },
+            'image/webp',
+            80);
         });
       };
 
@@ -136,6 +154,15 @@ export class HomeComponent {
     this.popupConfig = false;
   }
 
+  toggleProfileEdit() {
+    this.popupProfileEdit = !this.popupProfileEdit;
+    this.popupProfile = false;
+  }
+
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+  }
+
   sair() {
     if (this.cookies.get('u')) {
       this.cookies.delete('u');
@@ -146,4 +173,6 @@ export class HomeComponent {
   }
 
   protected readonly console = module;
+  protected readonly user = user;
+  protected readonly userInfo = userInfo;
 }

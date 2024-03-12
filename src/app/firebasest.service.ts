@@ -1,4 +1,4 @@
-import {getDownloadURL, Storage, ref} from '@angular/fire/storage';
+import {getDownloadURL, Storage, ref, uploadBytes} from '@angular/fire/storage';
 import {Injectable} from '@angular/core';
 
 @Injectable({
@@ -10,5 +10,10 @@ export class FirebaseServiceStorage {
 
   async pegarFotoDoUsuario(username: String): Promise<string> {
     return await getDownloadURL(ref(this.storage, `users/${username}.webp`));
+  }
+
+  async subirFotoDoUsuario(username: string, imagem: Blob) {
+    await uploadBytes(ref(this.storage, `users/${username}.webp`), imagem);
+    return;
   }
 }

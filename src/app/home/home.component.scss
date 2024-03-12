@@ -173,7 +173,7 @@ nav {
       }
     }
 
-    button:not(#sairSair, #cancelarSair, #selecionarFoto) {
+    button:not(#sairSair, #cancelarSair, #selecionarFoto, #editBio) {
       width: 60px;
       height: 60px;
       border-radius: 1em;
@@ -277,4 +277,8 @@ section {
 
   background-color: rgba(0, 0, 0, .2);
   backdrop-filter: blur(2px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

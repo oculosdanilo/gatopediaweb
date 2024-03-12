@@ -22,7 +22,7 @@ export type AuthResponse = {
 
 export type User = {
   senha: string;
-  bio?: string;
+  bio: string;
   img?: boolean;
 };
 
@@ -58,11 +58,11 @@ export class FirebaseServiceDatabase {
     }
   }
 
-  createUser(user: string, value: { senha: string }): Promise<void> {
+  createUser(user: string, value: { senha: string }) {
     return set(ref(this.database, 'users/' + user), value);
   }
 
-  updateBio(user: string, value: string): Promise<void> {
+  updateBio(user: string, value: string) {
     return update(ref(this.database, 'users/' + user), {bio: value});
   }
 
@@ -70,13 +70,18 @@ export class FirebaseServiceDatabase {
     return get(ref(this.database, 'gatos/'));
   }
 
-  startPegarPosts(): void {
+  startPegarPosts() {
     this.unsubscribe = onValue(ref(this.database, 'posts/'), (snapshot) => {
       posts = snapshot.val();
     });
   }
 
-  stopPegarPosts(): void {
+  stopPegarPosts() {
     this.unsubscribe();
+  }
+
+  async setImg(username: string) {
+    await set(ref(this.database, `users/${username}/img`), true);
+    return;
   }
 }

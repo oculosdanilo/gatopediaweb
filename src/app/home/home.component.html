@@ -31,7 +31,18 @@
 
         <mat-divider class="configDivider"/>
 
-        <div id="bio"></div>
+        <div id="bio">
+          <h2>Bio</h2>
+          <div id="idle" *ngIf="!editMode; else editando">
+            <p>{{ userBio }}</p>
+            <button mat-icon-button id="editBio">
+              edit
+            </button>
+          </div>
+          <ng-template id="editando" #editando>
+
+          </ng-template>
+        </div>
         <div id="deletarConta"></div>
       </div>
 
@@ -79,14 +90,20 @@
     </div>
   </nav>
 
-  <div id="photoEdit" *ngIf="popupProfileEdit">
+  <div @aparecer class="bgBlur" *ngIf="popupProfileEdit">
+    <div style="position: relative; width: 150px; height: 150px">
+      <img ngSrc="assets/gato.svg" alt="" fill/>
+    </div>
+  </div>
+
+  <div @aparecer id="photoEdit" *ngIf="popupProfileEdit">
     <div>
       <!--suppress AngularNgOptimizedImage -->
       <img src="" alt="" id="crop">
     </div>
 
     <div style="display: flex; justify-content: flex-end; margin-top: 1.5em">
-      <button id="cancelarCrop">CANCELAR</button>
+      <button (click)="toggleProfileEdit()" id="cancelarCrop">CANCELAR</button>
       <button id="salvarCrop">SALVAR</button>
     </div>
   </div>
