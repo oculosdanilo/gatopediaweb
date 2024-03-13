@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { WikiComponent } from './wiki.component';
+import {WikiComponent} from './wiki.component';
 
 describe('WikiComponent', () => {
   let component: WikiComponent;
@@ -10,8 +10,8 @@ describe('WikiComponent', () => {
     await TestBed.configureTestingModule({
       imports: [WikiComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(WikiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

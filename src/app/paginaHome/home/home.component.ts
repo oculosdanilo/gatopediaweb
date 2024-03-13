@@ -1,18 +1,20 @@
 import {Component} from '@angular/core';
-import {cookies} from '../cookies.service';
+import {cookies} from '../../cookies.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {ModoTema, TemaService} from '../tema.service';
+import {ModoTema, TemaService} from '../../tema.service';
 import {NgIf, NgOptimizedImage} from '@angular/common';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {MatDividerModule} from '@angular/material/divider';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import {FirebaseServiceDatabase, User} from '../firebasedb.service';
-import {FirebaseServiceStorage} from '../firebasest.service';
+import {FirebaseServiceDatabase, User} from '../../firebasedb.service';
+import {FirebaseServiceStorage} from '../../firebasest.service';
 import Cropper from 'cropperjs';
-import {user} from '@angular/fire/auth';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {ForumComponent} from '../forum/forum.component';
+import {WikiComponent} from '../wiki/wiki.component';
+import * as $ from 'jquery';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -42,7 +44,7 @@ export var userInfo: User;
   styleUrls: ['./home.component.scss'],
   standalone: true,
   animations: [popupAnimation],
-  imports: [MatButtonModule, MatIconModule, NgIf, MatDividerModule, NzIconModule, NgOptimizedImage, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [MatButtonModule, MatIconModule, NgIf, MatDividerModule, NzIconModule, NgOptimizedImage, MatButtonModule, MatFormFieldModule, MatInputModule, ForumComponent, WikiComponent],
 })
 export class HomeComponent {
   username = '';
@@ -61,6 +63,8 @@ export class HomeComponent {
   popupProfile = false;
   popupProfileEdit = false;
   editMode = false;
+
+  popupDelete = true;
 
   constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase,
               private firebaseSt: FirebaseServiceStorage) {
@@ -164,6 +168,11 @@ export class HomeComponent {
     this.editMode = !this.editMode;
   }
 
+  toggleDelete() {
+    this.popupDelete = !this.popupDelete;
+    this.popupProfile = false;
+  }
+
   atualizarBio() {
     $('#editando div button').attr('disabled', 'true');
     let novaBio = $('#novaBio').val() as string;
@@ -185,6 +194,18 @@ export class HomeComponent {
     }
   }
 
+  mouseIn(event: Event) {
+    event.preventDefault();
+    $('#senha').attr('type', 'text');
+    $('#verSenha').html('visibility');
+  }
+
+  mouseOut(event: Event) {
+    event.preventDefault();
+    $('#senha').attr('type', 'password');
+    $('#verSenha').html('visibility_off');
+  }
+
   sair() {
     if (this.cookies.get('u')) {
       this.cookies.delete('u');
@@ -193,8 +214,4 @@ export class HomeComponent {
     }
     location.reload();
   }
-
-  protected readonly console = module;
-  protected readonly user = user;
-  protected readonly userInfo = userInfo;
 }

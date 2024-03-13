@@ -1,16 +1,15 @@
 // noinspection JSUnresolvedReference
 
-import {AuthResponse, Motivo} from '../firebasedb.service';
-import {ModoTema, TemaService} from '../tema.service';
+import {AuthResponse, FirebaseServiceDatabase, Motivo} from '../../firebasedb.service';
+import {ModoTema, TemaService} from '../../tema.service';
 import {Component} from '@angular/core';
 import * as $ from 'jquery';
-import {FirebaseServiceDatabase} from '../firebasedb.service';
-import {ColabComponent} from './colab/colab.component';
+import {ColabComponent} from '../colab/colab.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {NgOptimizedImage, NgIf} from '@angular/common';
-import {cookies} from '../cookies.service';
+import {NgIf, NgOptimizedImage} from '@angular/common';
+import {cookies} from '../../cookies.service';
 
 type Input = {
   user: string;
@@ -56,8 +55,8 @@ export class LoginComponent {
       $('#verSenha').html('visibility');
     });
 
-    $("#audio").on("ended", () => {
-      document.title = "Gatopédia!";
+    $('#audio').on('ended', () => {
+      document.title = 'Gatopédia!';
     });
 
     $('#username').on('input', () => {
@@ -214,7 +213,7 @@ export class LoginComponent {
 
   miau(): void {
     const audio = document.querySelector<HTMLAudioElement>('#audio')!;
-    document.title = "miau";
+    document.title = 'miau';
     audio.play().then();
   }
 }

@@ -1,6 +1,10 @@
 <div style="display: flex; flex-direction: row-reverse; justify-content: flex-end">
-  <section id="forum"></section>
-  <section id="wiki"></section>
+  <section id="forum">
+    <gato-forum></gato-forum>
+  </section>
+  <section id="wiki">
+    <gato-wiki></gato-wiki>
+  </section>
   <nav>
     <button mat-icon-button class="mudarTema" (click)="mudarTema()">
       <mat-icon *ngIf="modoAtual == ModoTema.escuro; else escuro">
@@ -49,7 +53,10 @@
             </div>
           </ng-template>
         </div>
-        <div id="deletarConta"></div>
+
+        <mat-divider class="configDivider"/>
+
+        <button class="notNav" mat-raised-button color="warn" (click)="toggleDelete()">DELETAR CONTA</button>
       </div>
 
       <button id="config" (click)="toggleConfig()">
@@ -98,10 +105,9 @@
 
   <div @aparecer class="bgBlur" *ngIf="popupProfileEdit">
     <div style="position: relative; width: 150px; height: 150px">
-      <img ngSrc="assets/gato.svg" alt="" fill/>
+      <img ngSrc="../../../assets/gato.svg" alt="" fill/>
     </div>
   </div>
-
   <div @aparecer id="photoEdit" *ngIf="popupProfileEdit">
     <div>
       <!--suppress AngularNgOptimizedImage -->
@@ -111,6 +117,27 @@
     <div style="display: flex; justify-content: flex-end; margin-top: 1.5em">
       <button (click)="toggleProfileEdit()" id="cancelarCrop">CANCELAR</button>
       <button id="salvarCrop">SALVAR</button>
+    </div>
+  </div>
+
+  <div class="bgBlur" @aparecer *ngIf="popupDelete" (click)="toggleDelete()"></div>
+  <div id="deleteAcc" @aparecer *ngIf="popupDelete">
+    <h1>Sentirei saudades :,(</h1>
+    <label for="senha">Para deletar sua conta, insira abaixo sua senha:</label>
+    <div class="input-group">
+      <input
+        name="senha"
+        style="border-radius: 50px 0 0 50px"
+        type="password"
+        class="form-control"
+        id="senha"
+        autocomplete="current-password"
+      />
+      <a style="text-decoration: none; cursor: pointer" (mouseover)="mouseIn($event)" (mouseleave)="mouseOut($event)">
+        <span class="input-group-text" style="border-radius: 0 50px 50px 0">
+          <span class="material-icons" id="verSenha">visibility_off</span>
+        </span>
+      </a>
     </div>
   </div>
 </div>

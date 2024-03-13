@@ -1,7 +1,7 @@
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/variables-dark';
-@import 'bootstrap/scss/mixins';
+@import '../../../../node_modules/bootstrap/scss/functions';
+@import '../../../../node_modules/bootstrap/scss/variables';
+@import '../../../../node_modules/bootstrap/scss/variables-dark';
+@import '../../../../node_modules/bootstrap/scss/mixins';
 
 nav,
 section {
@@ -59,6 +59,7 @@ nav {
 
         p {
           font-size: large;
+          margin-right: 48px;
         }
 
         button {
@@ -69,6 +70,8 @@ nav {
       }
 
       #editando {
+        margin-bottom: 1em;
+
         textarea {
           width: 100%;
           max-height: 100px;
@@ -283,6 +286,28 @@ nav {
 section {
   width: calc((100vw - 90px - 10vh) / 2);
   background-color: var(--bs-secondary-bg);
+}
+
+#deleteAcc {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: var(--bs-danger-bg-subtle);
+  color: var(--bs-body-color);
+  width: max-content;
+  padding: 25px;
+  border-radius: 25px;
+
+  h1 {
+    margin-bottom: 1em;
+    font-weight: bold;
+  }
+
+  label {
+    
+  }
 }
 
 #photoEdit {

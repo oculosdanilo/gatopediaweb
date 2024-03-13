@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-forum',
+  selector: 'gato-forum',
   standalone: true,
   imports: [],
   templateUrl: './forum.component.html',
