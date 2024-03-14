@@ -105,7 +105,7 @@
 
   <div @aparecer class="bgBlur" *ngIf="popupProfileEdit">
     <div style="position: relative; width: 150px; height: 150px">
-      <img ngSrc="../../../assets/gato.svg" alt="" fill/>
+      <img ngSrc="assets/gato.svg" alt="" fill/>
     </div>
   </div>
   <div @aparecer id="photoEdit" *ngIf="popupProfileEdit">
@@ -120,10 +120,16 @@
     </div>
   </div>
 
-  <div class="bgBlur" @aparecer *ngIf="popupDelete" (click)="toggleDelete()"></div>
+  <div class="bgBlur" @aparecer *ngIf="popupDelete" (click)="toggleDelete()">
+    <div style="position: relative; width: 150px; height: 150px">
+      <img ngSrc="assets/gato.svg" alt="" fill/>
+    </div>
+  </div>
   <div id="deleteAcc" @aparecer *ngIf="popupDelete">
     <h1>Sentirei saudades :,(</h1>
-    <label for="senha">Para deletar sua conta, insira abaixo sua senha:</label>
+    <p>Quando sua conta for deletada, suas postagens e comentários serão removidos da plataforma e seu usuário não
+      poderá mais ser usado por ninguém.</p>
+    <label for="senha">Para continuar, insira abaixo sua senha:</label>
     <div class="input-group">
       <input
         name="senha"
@@ -138,6 +144,11 @@
           <span class="material-icons" id="verSenha">visibility_off</span>
         </span>
       </a>
+    </div>
+
+    <div class="botoesDelete">
+      <button>CANCELAR</button>
+      <button>APAGAR MINHA CONTA</button>
     </div>
   </div>
 </div>

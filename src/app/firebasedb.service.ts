@@ -75,4 +75,8 @@ export class FirebaseServiceDatabase {
     await set(ref(this.database, `users/${username}/img`), true);
     return;
   }
+
+  async deletarUsuario(username: string) {
+    await set(ref(this.database, `users/${username}`), {removido: true});
+  }
 }

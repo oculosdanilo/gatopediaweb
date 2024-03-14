@@ -40,8 +40,7 @@ nav {
       color: var(--bs-body-color);
       border-radius: 20px;
       font-size: 90%;
-      width: max-content;
-      max-width: 400px;
+      width: 400px;
 
       top: 1em;
       left: 100px;
@@ -296,7 +295,7 @@ section {
 
   background-color: var(--bs-danger-bg-subtle);
   color: var(--bs-body-color);
-  width: max-content;
+  width: 500px;
   padding: 25px;
   border-radius: 25px;
 
@@ -305,8 +304,15 @@ section {
     font-weight: bold;
   }
 
-  label {
-    
+  label, p {
+    margin-bottom: .5em;
+    font-size: large;
+  }
+
+  .botoesDelete {
+    margin-top: 1em;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 

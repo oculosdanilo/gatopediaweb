@@ -101,7 +101,7 @@ export class HomeComponent {
 
         $('#salvarCrop').on('click', () => {
           let canv = c.getCroppedCanvas();
-          $('#photoEdit').css('display', 'none');
+          $('#photoEdit').hide();
 
           canv.toBlob((blob) => {
               if (blob)
@@ -213,5 +213,15 @@ export class HomeComponent {
       sessionStorage.removeItem('u');
     }
     location.reload();
+  }
+
+  async apagarConta() {
+    $('#deleteAcc').hide();
+
+    await this.firebaseDB.deletarUsuario(this.username);
+    if (userInfo.img)
+      await this.firebaseSt.removerFotoDoUsuario(this.username);
+
+    this.sair();
   }
 }
