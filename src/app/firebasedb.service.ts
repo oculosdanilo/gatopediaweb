@@ -11,6 +11,34 @@ export type AuthResponse = {
   motivoRejeicao?: Motivo;
 };
 
+export type Post = {
+  content: string;
+  img?: boolean;
+  username: string;
+  likes: {
+    lenght: number;
+    users: string;
+  };
+  comentarios: Comentario[]
+}
+
+export type Comentario = {
+  content: string;
+  username: string;
+}
+
+export type ComentarioWiki = {
+  content: string;
+  user: string;
+}
+
+export type Gato = {
+  descricao: string;
+  img: string;
+  resumo: string;
+  comentarios: ComentarioWiki[]
+}
+
 export type User = {
   senha: string;
   bio: string;
@@ -74,7 +102,32 @@ export class FirebaseServiceDatabase {
 
   async deletarUsuario(username: string) {
     let todosOsPosts = await get(ref(this.database, 'posts'));
-    console.log(todosOsPosts.val());
+    todosOsPosts.forEach((post) => {
+      let postAtual: Post = post.val();
+
+      if (postAtual.username === username) {
+        console.log(postAtual);
+      }
+
+      postAtual.comentarios.forEach((comentario) => {
+        if (comentario.username === username) {
+          console.log(comentario);
+        }
+      });
+    });
+
+    let wikiInteira = await get(ref(this.database, 'gatos'));
+    wikiInteira.forEach((gato) => {
+      let gatoAtual: Gato = gato.val();
+
+      gatoAtual.comentarios.forEach((comentario) => {
+        if (comentario.user === username) {
+          console.log(comentario);
+        }
+      });
+    });
     /*await remove(ref(this.database, `users/${username}`));*/
+
+    // TODO: fazer o coiso de deletar a conta depois de montar os posts
   }
 }
