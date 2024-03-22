@@ -35,16 +35,6 @@ bootstrapApplication(AppComponent, {
     })),
     importProvidersFrom(provideDatabase(() => getDatabase())),
     importProvidersFrom(provideStorage(() => getStorage())),
-    importProvidersFrom(provideFirebaseApp(() => initializeApp({
-      'projectId': 'fluttergatopedia',
-      'appId': '1:906400327488:web:32c39cf107be006691fca5',
-      'databaseURL': 'https://fluttergatopedia-default-rtdb.firebaseio.com',
-      'storageBucket': 'fluttergatopedia.appspot.com',
-      'apiKey': 'AIzaSyBKglLyclrqKhfYgDl6SWdTZvha09Jj768',
-      'authDomain': 'fluttergatopedia.firebaseapp.com',
-      'messagingSenderId': '906400327488',
-      'measurementId': 'G-XD3EN1YDVE',
-    }))),
     importProvidersFrom(provideAuth(() => getAuth())),
   ],
 }).catch((err) => console.error(err));
