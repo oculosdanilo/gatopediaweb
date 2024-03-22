@@ -116,9 +116,19 @@
         "deploy": {
           "builder": "@angular/fire:deploy",
           "options": {
-            "version": 2,
-            "browserTarget": "gatopediaweb:build:production"
-          }
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "gatopediaweb:build:production",
+              "serveTarget": "gatopediaweb:serve:production"
+            },
+            "development": {
+              "buildTarget": "gatopediaweb:build:development",
+              "serveTarget": "gatopediaweb:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

@@ -67,16 +67,14 @@ export class FirebaseServiceDatabase {
     });
   }
 
-  stopPegarPosts() {
-    this.unsubscribe();
-  }
-
   async setImg(username: string) {
     await set(ref(this.database, `users/${username}/img`), true);
     return;
   }
 
   async deletarUsuario(username: string) {
-    await set(ref(this.database, `users/${username}`), {removido: true});
+    let todosOsPosts = await get(ref(this.database, 'posts'));
+    console.log(todosOsPosts.val());
+    /*await remove(ref(this.database, `users/${username}`));*/
   }
 }

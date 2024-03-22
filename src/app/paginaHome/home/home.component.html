@@ -105,7 +105,7 @@
 
   <div @aparecer class="bgBlur" *ngIf="popupProfileEdit">
     <div style="position: relative; width: 150px; height: 150px">
-      <img ngSrc="assets/gato.svg" alt="" fill/>
+      <img ngSrc="assets/gato.svg" alt="" fill priority/>
     </div>
   </div>
   <div @aparecer id="photoEdit" *ngIf="popupProfileEdit">
@@ -122,7 +122,7 @@
 
   <div class="bgBlur" @aparecer *ngIf="popupDelete" (click)="toggleDelete()">
     <div style="position: relative; width: 150px; height: 150px">
-      <img ngSrc="assets/gato.svg" alt="" fill/>
+      <img ngSrc="assets/gato.svg" alt="" fill priority/>
     </div>
   </div>
   <div id="deleteAcc" @aparecer *ngIf="popupDelete">
@@ -147,8 +147,8 @@
     </div>
 
     <div class="botoesDelete">
-      <button>CANCELAR</button>
-      <button>APAGAR MINHA CONTA</button>
+      <button (click)="toggleDelete()">CANCELAR</button>
+      <button (click)="apagarConta()">APAGAR MINHA CONTA</button>
     </div>
   </div>
 </div>

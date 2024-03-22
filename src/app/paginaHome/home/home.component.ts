@@ -216,12 +216,12 @@ export class HomeComponent {
   }
 
   async apagarConta() {
-    $('#deleteAcc').hide();
+    /*$('#deleteAcc').hide();*/
 
     await this.firebaseDB.deletarUsuario(this.username);
-    if (userInfo.img)
-      await this.firebaseSt.removerFotoDoUsuario(this.username);
+    /*if (userInfo.img)
+      await this.firebaseSt.removerFotoDoUsuario(this.username);*/
 
-    this.sair();
+    /*this.sair();*/
   }
 }
