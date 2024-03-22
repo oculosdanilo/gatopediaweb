@@ -1,4 +1,4 @@
-import {Component, input, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ModoTema} from '../../tema.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
@@ -9,6 +9,28 @@ import {FirebaseServiceDatabase, User} from '../../firebasedb.service';
 import Cropper from 'cropperjs';
 import * as $ from 'jquery';
 import {FirebaseServiceStorage} from '../../firebasest.service';
+import {cookies} from '../../cookies.service';
+import {animate, style, transition, trigger} from '@angular/animations';
+
+const popupAnimation = trigger('aparecer', [
+  transition(':enter', [
+    style({opacity: 0}),
+    animate(
+      '200ms ease',
+      style({
+        opacity: 1,
+      })
+    ),
+  ]),
+  transition(':leave', [
+    animate(
+      '200ms ease',
+      style({
+        opacity: 0,
+      })
+    ),
+  ]),
+]);
 
 @Component({
   selector: 'gato-nav',
@@ -22,27 +44,36 @@ import {FirebaseServiceStorage} from '../../firebasest.service';
     NzIconDirective
   ],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.scss'
+  styleUrl: './nav.component.scss',
+  animations: [popupAnimation]
 })
 export class NavComponent {
-  constructor(private firebaseSt: FirebaseServiceStorage, private firebaseDB: FirebaseServiceDatabase) {
+  constructor(private firebaseSt: FirebaseServiceStorage, private firebaseDB: FirebaseServiceDatabase,
+              private cookies: cookies) {
   }
 
-  @Input() modoAtual: ModoTema = ModoTema.escuro;
-  @Input() userInfo: User = {bio: '', senha: ''};
-  @Input() username: string = '';
+  @Input({required: true}) modoAtual: ModoTema = ModoTema.escuro;
+  @Input({required: true}) userInfo: User = {bio: '', senha: ''};
+  @Input({required: true}) username: string = '';
   ModoTema = ModoTema;
   editMode = false;
   userBio = '(vazio)';
+  ano = new Date().getFullYear();
+
+  @Output() toggleProfileEdit = new EventEmitter<void>();
+  @Output() mudarTema = new EventEmitter<void>();
+  @Output() toggleDelete = new EventEmitter<void>();
+  @Output() toggleProfile = new EventEmitter<void>();
+  @Output() toggleConfig = new EventEmitter<void>();
 
   src = 'assets/user.webp';
 
   popupSair = false;
-  popupConfig = false;
-  @Input() popupProfile = false;
+  @Input({required: true}) popupConfig = false;
+  @Input({required: true}) popupProfile = false;
 
   ngOnInit() {
-
+    this.init().then();
   }
 
   async init() {
@@ -79,7 +110,7 @@ export class NavComponent {
   }
 
   quandoPegarFoto() {
-    this.toggleProfileEdit();
+    this.toggleProfileEdit.emit();
 
     const profileSelect = document.getElementById('profileSelect') as HTMLInputElement;
     const file = profileSelect.files![0];
@@ -103,7 +134,7 @@ export class NavComponent {
                   c.clear();
                   await this.firebaseDB.setImg(this.username);
                   await this.init();
-                  this.toggleProfileEdit();
+                  this.toggleProfileEdit.emit();
                 });
             },
             'image/webp',
@@ -123,13 +154,12 @@ export class NavComponent {
     this.popupProfile = false;
   }
 
-  toggleConfig() {
-    this.popupConfig = !this.popupConfig;
-    this.popupProfile = false;
-  }
-
-  toggleProfile() {
-    this.popupProfile = !this.popupProfile;
-    this.popupConfig = false;
+  sair() {
+    if (this.cookies.get('u')) {
+      this.cookies.delete('u');
+    } else {
+      sessionStorage.removeItem('u');
+    }
+    location.reload();
   }
 }

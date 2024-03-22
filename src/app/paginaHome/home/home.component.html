@@ -6,6 +6,10 @@
     <gato-wiki></gato-wiki>
   </section>
 
+  <gato-nav (mudarTema)="mudarTema()" (toggleDelete)="toggleDelete()" (toggleProfileEdit)="toggleProfileEdit()"
+            [modoAtual]="modoAtual" [popupProfile]="popupProfile" [userInfo]="userInfo"
+            [username]="username" (toggleProfile)="toggleProfile()" [popupConfig]="popupConfig"
+            (toggleConfig)="toggleConfig()"></gato-nav>
 
   <div @aparecer class="bgBlur" *ngIf="popupProfileEdit">
     <div style="position: relative; width: 150px; height: 150px">

@@ -1,5 +1,5 @@
 <nav>
-  <button mat-icon-button class="mudarTema" (click)="mudarTema()">
+  <button mat-icon-button class="mudarTema" (click)="mudarTema.emit()">
     <mat-icon *ngIf="modoAtual == ModoTema.escuro; else escuro">
       light_mode
     </mat-icon>
@@ -10,7 +10,7 @@
 
   <div class="botoes">
 
-    <button id="profile" (click)="toggleProfile()">
+    <button id="profile" (click)="toggleProfile.emit()">
       <img ngSrc="{{ src }}" alt="" width="60" height="60" priority>
     </button>
     <div @aparecer class="popupProfile" *ngIf="popupProfile">
@@ -49,10 +49,12 @@
 
       <mat-divider class="configDivider"/>
 
-      <button class="notNav" mat-raised-button color="warn" (click)="toggleDelete()">DELETAR CONTA</button>
+      <button style="z-index: 0;" class="notNav" mat-raised-button color="warn" (click)="toggleDelete.emit()">DELETAR
+        CONTA
+      </button>
     </div>
 
-    <button id="config" (click)="toggleConfig()">
+    <button id="config" (click)="toggleConfig.emit()">
       <mat-icon>more_horiz</mat-icon>
     </button>
     <div @aparecer class="popupConfig" *ngIf="popupConfig">
