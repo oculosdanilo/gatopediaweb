@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FirebaseServiceDatabase, Gato} from '../../firebasedb.service';
 import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {decode} from 'blurhash';
 import {FirebaseServiceStorage} from '../../firebasest.service';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @Component({
@@ -11,7 +12,8 @@ import {FirebaseServiceStorage} from '../../firebasest.service';
   imports: [
     NgForOf,
     NgIf,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatButtonModule
   ],
   templateUrl: './wiki.component.html',
   styleUrl: './wiki.component.scss'
@@ -19,6 +21,7 @@ import {FirebaseServiceStorage} from '../../firebasest.service';
 export class WikiComponent {
   listaGatos: Gato[] | undefined;
   jaFoiPegarGatos = false;
+  @Output() popupGato = new EventEmitter<Gato>();
 
   constructor(private firebaseDB: FirebaseServiceDatabase, private fireabaseSt: FirebaseServiceStorage) {
   }
@@ -27,7 +30,7 @@ export class WikiComponent {
     this.init().then(() => {
       setTimeout(() => {
         let gatos = document.getElementById('gatos')!;
-        let todosOsCanvas: NodeListOf<HTMLCanvasElement> = gatos.querySelectorAll('.gatoImg');
+        let todosOsCanvas: NodeListOf<HTMLCanvasElement> = gatos.querySelectorAll('canvas.gatoImg');
 
         todosOsCanvas.forEach((canvas) => {
           let canvasIndex = Array.from(todosOsCanvas.values()).indexOf(canvas);
@@ -45,7 +48,17 @@ export class WikiComponent {
           this.fireabaseSt.pegarFotoDoGato(gatoImg[0]).then((imagemBlob) => {
             let img = new Image();
             img.onload = () => {
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              this.listaGatos![canvasIndex].imgData = img;
+              let o = 0;
+
+              setInterval(() => {
+                ctx.globalAlpha = o;
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                o += 0.01;
+                if (o > 1)
+                  o = 1;
+              }, 1);
             };
             img.src = URL.createObjectURL(imagemBlob);
           });

@@ -6,6 +6,28 @@
       <h1>{{ gato.nome }}</h1>
       <p>{{ gato.resumo }}</p>
     </div>
+
+    <div style="display: flex; justify-content: flex-end">
+      <button mat-raised-button class="gatoBtn" color="primary" (click)="popupGato.emit(gato)">VER MAIS</button>
+    </div>
+  </div>
+  <div class="gatoCard">
+    <div class="gatoImg">
+      <img ngSrc="assets/newIcon.webp" fill alt="" priority>
+    </div>
+
+    <div class="gatoLabel">
+      <h1>Em breve...</h1>
+    </div>
+  </div>
+  <div class="gatoCard">
+    <div class="gatoImg">
+      <img ngSrc="assets/newIcon.webp" fill alt="" priority>
+    </div>
+
+    <div class="gatoLabel">
+      <h1>Em breve...</h1>
+    </div>
   </div>
 </div>
 

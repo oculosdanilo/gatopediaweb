@@ -37,7 +37,8 @@ export type Gato = {
   descricao: string;
   img: string;
   resumo: string;
-  comentarios: ComentarioWiki[]
+  comentarios: ComentarioWiki[];
+  imgData?: HTMLImageElement;
 }
 
 export type User = {
@@ -52,6 +53,8 @@ export type User = {
 export class FirebaseServiceDatabase {
   constructor(private database: Database) {
   }
+
+  comentariosLista: ComentarioWiki[] | undefined;
 
   async getUser(user: string): Promise<User | null> {
     return (

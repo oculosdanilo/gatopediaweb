@@ -2,16 +2,19 @@ import {Component} from '@angular/core';
 import {cookies} from '../../cookies.service';
 import {MatButtonModule} from '@angular/material/button';
 import {ModoTema, TemaService} from '../../tema.service';
-import {NgIf, NgOptimizedImage} from '@angular/common';
+import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {MatDividerModule} from '@angular/material/divider';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import {FirebaseServiceDatabase, User} from '../../firebasedb.service';
+import {ComentarioWiki, FirebaseServiceDatabase, Gato, User} from '../../firebasedb.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ForumComponent} from '../forum/forum.component';
 import {WikiComponent} from '../wiki/wiki.component';
 import * as $ from 'jquery';
 import {NavComponent} from '../nav/nav.component';
+import {FirebaseServiceStorage} from '../../firebasest.service';
+import {decode} from 'blurhash';
+import {Database, onValue, ref, Unsubscribe} from '@angular/fire/database';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -40,7 +43,7 @@ const popupAnimation = trigger('aparecer', [
   standalone: true,
   animations: [popupAnimation],
   imports: [NgIf, MatDividerModule, NzIconModule, NgOptimizedImage, MatButtonModule,
-    MatFormFieldModule, ForumComponent, WikiComponent, NavComponent],
+    MatFormFieldModule, ForumComponent, WikiComponent, NavComponent, NgForOf],
 })
 export class HomeComponent {
   username = '';
@@ -52,7 +55,12 @@ export class HomeComponent {
   popupProfile = false;
   popupConfig = false;
 
-  constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase) {
+  gatoEscolhido: Gato | undefined;
+  comentarios: ComentarioWiki[] | undefined;
+  parar: Unsubscribe | undefined;
+
+  constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase,
+              protected firebaseSt: FirebaseServiceStorage, private database: Database) {
   }
 
   ngOnInit() {
@@ -97,6 +105,68 @@ export class HomeComponent {
   toggleConfig() {
     this.popupConfig = !this.popupConfig;
     this.popupProfile = false;
+  }
+
+  mostrarGato(gato: Gato) {
+    this.gatoEscolhido = gato;
+
+    this.gatoEscolhido.descricao = gato.descricao.replaceAll('\\n', '<br />');
+
+    setTimeout(() => {
+      const pt1 = document.querySelector('.pt1')!;
+      const descricao = document.createElement('p');
+      descricao.style.textAlign = 'center';
+      descricao.style.maxWidth = '300px';
+      descricao.innerHTML = this.gatoEscolhido!.descricao!;
+      pt1.appendChild(descricao);
+
+      this.parar = onValue(ref(this.database, `gatos/${gato.nome}/comentarios`), (commSnapshot) => {
+        this.comentarios = [];
+
+        commSnapshot.forEach((comentario) => {
+          if (comentario.val() !== 'null')
+            // @ts-ignore
+            this.comentarios.push(comentario.val());
+        });
+      });
+
+      const canvas = document.getElementById('gatoFoto') as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d')!;
+
+      if (gato.imgData) {
+        ctx.drawImage(gato.imgData, 0, 0, canvas.width, canvas.height);
+      } else {
+        const hashString = gato.img.split('&')[1];
+
+        const pixels = decode(hashString, canvas.width, canvas.height);
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        imageData.data.set(pixels);
+        ctx.putImageData(imageData, 0, 0);
+
+        let jaCarregou = false;
+        setInterval(() => {
+          if (gato.imgData && !jaCarregou) {
+            let o = 0;
+
+            setInterval(() => {
+              ctx.globalAlpha = o;
+              ctx.drawImage(gato.imgData!, 0, 0, canvas.width, canvas.height);
+
+              o += 0.01;
+              if (o > 1)
+                o = 1;
+            }, 1);
+            jaCarregou = true;
+          }
+        }, 10);
+      }
+    });
+  }
+
+  dismissGato() {
+    this.gatoEscolhido = undefined;
+    this.parar!();
+    this.comentarios = undefined;
   }
 
   mouseIn(event: Event) {

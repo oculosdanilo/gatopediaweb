@@ -3,7 +3,7 @@
     <gato-forum></gato-forum>
   </section>
   <section id="wiki">
-    <gato-wiki></gato-wiki>
+    <gato-wiki (popupGato)="mostrarGato($event)"></gato-wiki>
   </section>
 
   <gato-nav (mudarTema)="mudarTema()" (toggleDelete)="toggleDelete()" (toggleProfileEdit)="toggleProfileEdit()"
@@ -56,6 +56,36 @@
     <div class="botoesDelete">
       <button (click)="toggleDelete()">CANCELAR</button>
       <button (click)="apagarConta()">APAGAR MINHA CONTA</button>
+    </div>
+  </div>
+
+  <div class="bgBlur" @aparecer *ngIf="gatoEscolhido" (click)="dismissGato()"></div>
+  <div id="popupGato" *ngIf="gatoEscolhido" @aparecer>
+    <div class="pt1">
+      <canvas id="gatoFoto"></canvas>
+      <h1>{{ gatoEscolhido.nome }}</h1>
+      <h4>{{ gatoEscolhido.resumo }}</h4>
+    </div>
+    <mat-divider [vertical] class="divider"/>
+    <div class="pt2">
+      <h2>Comentários</h2>
+
+      <div *ngIf="comentarios; else carregando" class="comentarios">
+        <div *ngFor="let comentario of comentarios" class="comentarioCard">
+          <canvas class="fotoDePerfilPublica"></canvas>
+          <div class="conteudo">
+            <h2>{{ comentario.user }}</h2>
+            <p>{{ comentario.content }}</p>
+          </div>
+        </div>
+      </div>
+      <ng-template #carregando>
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 90%">
+          <div style="width: 100px; height: 100px; position: relative">
+            <img ngSrc="assets/gato.svg" alt="" fill priority/>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

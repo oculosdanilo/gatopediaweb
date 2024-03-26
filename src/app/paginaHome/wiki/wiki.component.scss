@@ -1,5 +1,4 @@
 .gatoCard {
-  display: inline-block;
   background-color: var(--bs-tertiary-bg);
 
   width: calc(((100vw - 90px - 10vh) / 2) / 3 - 2em);
@@ -15,5 +14,10 @@
 
   .gatoLabel {
     margin: 1em 1.5em;
+  }
+
+  .gatoBtn {
+    margin: 0 1.5em 1.5em 0;
+    border-radius: 999px;
   }
 }
