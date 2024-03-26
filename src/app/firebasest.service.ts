@@ -1,4 +1,4 @@
-import {deleteObject, getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
+import {deleteObject, getBlob, getDownloadURL, ref, Storage, uploadBytes} from '@angular/fire/storage';
 import {Injectable} from '@angular/core';
 
 @Injectable({
@@ -18,5 +18,9 @@ export class FirebaseServiceStorage {
 
   async removerFotoDoUsuario(username: string) {
     return await deleteObject(ref(this.storage, `users/${username}`));
+  }
+
+  async pegarFotoDoGato(gato: string): Promise<Blob> {
+    return await getBlob(ref(this.storage, `gatos/${gato}.webp`));
   }
 }

@@ -10,6 +10,10 @@ section {
   border-radius: 1.5em;
   width: calc((100vw - 90px - 10vh) / 2);
   background-color: var(--bs-secondary-bg);
+
+  padding: 1.5em;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #deleteAcc {

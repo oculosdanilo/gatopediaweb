@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Database, DataSnapshot, get, onValue, ref, set, Unsubscribe, update,} from '@angular/fire/database';
+import {Database, get, onValue, ref, set, update,} from '@angular/fire/database';
 
 export enum Motivo {
   naoExiste,
@@ -33,6 +33,7 @@ export type ComentarioWiki = {
 }
 
 export type Gato = {
+  nome: string;
   descricao: string;
   img: string;
   resumo: string;
@@ -45,16 +46,12 @@ export type User = {
   img?: boolean;
 };
 
-export var posts: [];
-
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseServiceDatabase {
   constructor(private database: Database) {
   }
-
-  unsubscribe!: Unsubscribe;
 
   async getUser(user: string): Promise<User | null> {
     return (
@@ -85,13 +82,27 @@ export class FirebaseServiceDatabase {
     return update(ref(this.database, `users/${user}/`), {bio: value});
   }
 
-  pegarGatos(): Promise<DataSnapshot> {
-    return get(ref(this.database, 'gatos/'));
+  async pegarGatos(): Promise<Gato[]> {
+    let listaGatos: Gato[] = [];
+    let listaSnapshot = await get(ref(this.database, 'gatos/'));
+    listaSnapshot.forEach((gatoSnapshot) => {
+      let gatoAtual: Gato = gatoSnapshot.val();
+
+      listaGatos.push({
+        comentarios: gatoAtual.comentarios,
+        descricao: gatoAtual.descricao,
+        img: gatoAtual.img,
+        nome: gatoSnapshot.key,
+        resumo: gatoAtual.resumo
+      });
+    });
+
+    return listaGatos;
   }
 
   startPegarPosts() {
-    this.unsubscribe = onValue(ref(this.database, 'posts/'), (snapshot) => {
-      posts = snapshot.val();
+    onValue(ref(this.database, 'posts/'), (snapshot) => {
+      return snapshot;
     });
   }
 

@@ -1,1 +1,18 @@
-<p>wiki works!</p>
+<div *ngIf="listaGatos; else carregando" style="column-count: 3; column-gap: 1em" id="gatos">
+  <div *ngFor="let gato of listaGatos;" class="gatoCard">
+    <canvas class="gatoImg"></canvas>
+
+    <div class="gatoLabel">
+      <h1>{{ gato.nome }}</h1>
+      <p>{{ gato.resumo }}</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #carregando>
+  <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center">
+    <div style="position: relative; width: 10em; height: 10em">
+      <img ngSrc="assets/gato.svg" alt="Carregando..." fill priority>
+    </div>
+  </div>
+</ng-template>
