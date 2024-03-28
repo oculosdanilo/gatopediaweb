@@ -15,6 +15,8 @@ import {NavComponent} from '../nav/nav.component';
 import {FirebaseServiceStorage} from '../../firebasest.service';
 import {decode} from 'blurhash';
 import {Database, onValue, ref, Unsubscribe} from '@angular/fire/database';
+import {HttpClient} from '@angular/common/http';
+import {MatIconModule} from '@angular/material/icon';
 
 const popupAnimation = trigger('aparecer', [
   transition(':enter', [
@@ -43,7 +45,7 @@ const popupAnimation = trigger('aparecer', [
   standalone: true,
   animations: [popupAnimation],
   imports: [NgIf, MatDividerModule, NzIconModule, NgOptimizedImage, MatButtonModule,
-    MatFormFieldModule, ForumComponent, WikiComponent, NavComponent, NgForOf],
+    MatFormFieldModule, ForumComponent, WikiComponent, NavComponent, NgForOf, MatIconModule],
 })
 export class HomeComponent {
   username = '';
@@ -60,7 +62,7 @@ export class HomeComponent {
   parar: Unsubscribe | undefined;
 
   constructor(private cookies: cookies, private tema: TemaService, private firebaseDB: FirebaseServiceDatabase,
-              protected firebaseSt: FirebaseServiceStorage, private database: Database) {
+              protected firebaseSt: FirebaseServiceStorage, private database: Database, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -120,15 +122,38 @@ export class HomeComponent {
       descricao.innerHTML = this.gatoEscolhido!.descricao!;
       pt1.appendChild(descricao);
 
-      this.parar = onValue(ref(this.database, `gatos/${gato.nome}/comentarios`), (commSnapshot) => {
-        this.comentarios = [];
+      this.parar = onValue(ref(this.database, `gatos/${gato.nome}/comentarios`),
+        (commSnapshot) => {
+          this.comentarios = [];
 
-        commSnapshot.forEach((comentario) => {
-          if (comentario.val() !== 'null')
-            // @ts-ignore
-            this.comentarios.push(comentario.val());
+          commSnapshot.forEach((comentario) => {
+            if (comentario.val() !== 'null')
+              // @ts-ignore
+              this.comentarios.push(comentario.val());
+          });
+
+          setTimeout(() => {
+            const containerCom = document.querySelector('.containerCom')!;
+            containerCom.scroll({top: 99999});
+
+            const comentariosDiv = document.querySelector('.comentarios')!;
+            const comentariosListaCanvas: NodeListOf<HTMLCanvasElement> =
+              comentariosDiv.querySelectorAll('canvas');
+
+            this.http.get('assets/user.webp', {responseType: 'blob'}).subscribe(
+              res => {
+                const img = new Image();
+                img.onload = () => {
+                  comentariosListaCanvas.forEach((canvas) => {
+                    const ctx = canvas.getContext('2d')!;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                  });
+                };
+                img.src = URL.createObjectURL(res);
+              }
+            );
+          });
         });
-      });
 
       const canvas = document.getElementById('gatoFoto') as HTMLCanvasElement;
       const ctx = canvas.getContext('2d')!;

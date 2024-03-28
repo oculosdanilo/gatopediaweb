@@ -70,14 +70,25 @@
     <div class="pt2">
       <h2>Comentários</h2>
 
-      <div *ngIf="comentarios; else carregando" class="comentarios">
-        <div *ngFor="let comentario of comentarios" class="comentarioCard">
-          <canvas class="fotoDePerfilPublica"></canvas>
-          <div class="conteudo">
-            <h2>{{ comentario.user }}</h2>
-            <p>{{ comentario.content }}</p>
+      <div *ngIf="comentarios; else carregando" class="containerCom">
+        <div *ngIf="comentarios.length !== 0; else semComentarios" class="comentarios">
+          <div *ngFor="let comentario of comentarios" class="comentarioCard">
+            <canvas class="fotoDePerfilPublica"></canvas>
+            <div class="conteudo">
+              <h2>{{ comentario.user }}</h2>
+              <p>{{ comentario.content }}</p>
+            </div>
+            <div class="mais" *ngIf="username === comentario.user">
+              <button mat-icon-button>
+                <mat-icon>more_ver</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
+        <ng-template #semComentarios>
+          <h6>Nenhum comentário... (ainda)</h6>
+        </ng-template>
+        <!--<div class="novoComentario"></div>-->
       </div>
       <ng-template #carregando>
         <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 90%">
@@ -87,5 +98,8 @@
         </div>
       </ng-template>
     </div>
+    <button class="fecharPopup" (click)="dismissGato()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 </div>
